@@ -1,3 +1,6 @@
+#ifndef COLORS_H
+#define COLORS_H
+
 enum vga_color
 {
     VGA_COLOR_BLACK,
@@ -17,3 +20,5 @@ enum vga_color
     VGA_COLOR_LIGHT_BROWN,
     VGA_COLOR_WHITE
 };
+
+#endif

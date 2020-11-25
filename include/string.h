@@ -1,7 +1,6 @@
-#include <stdint.h>
+#ifndef STRING_H
+#define STRING_H
 
 void strcpy(char* dest, char* source);
 
-char dtoh(uint8_t digit);
-
-char* itoa(uint32_t number, char* buffer, int digits);
+#endif
