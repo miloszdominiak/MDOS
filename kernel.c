@@ -10,4 +10,6 @@ void kernel_main()
     terminal_initialize();
 
     printf("MDOS\n");
+    printf("----\n");
+    pci_enum();
 }

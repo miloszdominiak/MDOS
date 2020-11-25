@@ -1,5 +1,6 @@
 #include <ports.h>
 #include <stdio.h>
+#include <uhci.h>
 
 uint32_t pci_read(uint8_t bus, uint8_t slot, uint8_t function, uint8_t offset, uint8_t bytes)
 {
@@ -61,12 +62,9 @@ void pci_enum()
             {
                 printf("Znalazlem kontroler USB. ");
                 uint8_t type = pci_read(bus, slot, function, 0x9, 1);
-                char is_uhci = 0;
+                
                 if(type == 0x00)
-                {
                     printf("(UHCI)\n");
-                    is_uhci = 1;
-                }
                 if(type == 0x10)
                     printf("(OHCI)\n");
 
@@ -76,29 +74,16 @@ void pci_enum()
                 if(type == 0x30)
                     printf("(xHCI)\n");
 
-                uint32_t base_address = pci_read(bus, slot, function, is_uhci ? 0x20 : 0x10, 4);
-                base_address &= (is_uhci ? ~0x1 : ~0xF);
-                uint16_t size = pci_size(bus, slot, function, is_uhci);
-                printf("Bus = 0x%1, device = 0x%1, function = 0x%1, base = 0x%4, size = 0x%2\n",
-                    bus, slot, function, base_address, size);
+                printf("Bus = 0x%1, device = 0x%1, function = 0x%1\n", bus, slot, function);
 
-                if(is_uhci)
+                if(type == 0x00)
+                    uhci_init(bus, slot, function);
+                else if(type == 0x20)
                 {
-                    printf("Legacy = %2\n", pci_read(bus, slot, function, 0xC0, 4));
-                    pci_write(bus, slot, function, 0xC0, 0x00008F00);
-                    printf("Legacy = %2\n", pci_read(bus, slot, function, 0xC0, 4));
+                    ehci_init(bus, slot, function);
                 }
-                else
-                {
-                    uint16_t eecp;
-
-                    uint32_t ext;
-                    printf("Legacy = 0x%4\n", ext = pci_read(bus, slot, function, eecp, 4));
-                    pci_write(bus, slot, function, eecp, ext | (1 << 24));
-                    for(int i = 0; i < 1000000000; i++)
-                        i++;
-                    printf("Legacy = 0x%4\n", pci_read(bus, slot, function, eecp, 4));
-                }
+                
+                printf("\n");
             }
         }
     }
