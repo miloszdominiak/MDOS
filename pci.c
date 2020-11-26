@@ -60,21 +60,7 @@ void pci_enum()
             
             if(class == 0xC && subclass == 0x3)
             {
-                printf("Znalazlem kontroler USB. ");
                 uint8_t type = pci_read(bus, slot, function, 0x9, 1);
-                
-                if(type == 0x00)
-                    printf("(UHCI)\n");
-                if(type == 0x10)
-                    printf("(OHCI)\n");
-
-                if(type == 0x20)
-                    printf("(EHCI)\n");
-
-                if(type == 0x30)
-                    printf("(xHCI)\n");
-
-                printf("Bus = 0x%1, device = 0x%1, function = 0x%1\n", bus, slot, function);
 
                 if(type == 0x00)
                     uhci_init(bus, slot, function);
@@ -82,8 +68,6 @@ void pci_enum()
                 {
                     ehci_init(bus, slot, function);
                 }
-                
-                printf("\n");
             }
         }
     }

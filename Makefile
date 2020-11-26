@@ -7,7 +7,7 @@ myos: out/kernel.o out/terminal.o out/boot.o out/ports.o out/string.o out/pci.o 
 		out/terminal.o out/ports.o out/string.o out/pci.o out/stdio.o out/stdlib.o out/uhci.o out/ehci.o out/asmterm.o -lgcc
 	mv myos.bin isodir/boot/myos.bin
 	grub-mkrescue -o out/myos.iso isodir
-	qemu-system-i386 -cdrom out/myos.iso -usb -device pci-ohci -device usb-ehci -device qemu-xhci
+	qemu-system-i386 -cdrom out/myos.iso -usb
 
 out/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

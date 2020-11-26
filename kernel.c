@@ -12,4 +12,6 @@ void kernel_main()
     printf("MDOS\n");
     printf("----\n");
     pci_enum();
+
+    printf("Disabled USB Legacy\n");
 }
