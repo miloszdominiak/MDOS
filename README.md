@@ -13,4 +13,4 @@ Simple x86 OS for educational purposes
 + PS/2 controller initialisation
 + PS/2 keyboard input
 
-![Screenshot](http://parafiazelechlinek.pl/milosz/mdos.png "MDOS")
+![Screenshot](http://parafiazelechlinek.pl/milosz/mdos.png#1 "MDOS")
