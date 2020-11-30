@@ -6,13 +6,16 @@ extern uint8_t terminal_color, terminal_row, terminal_column;
 
 void putc(char c)
 {
-    if(c != '\n')
-        put_char_at(c, terminal_color, terminal_row, terminal_column);
-    else
+    if(c == '\b')
+        terminal_column -= 2;
+    else if(c == '\n')
     {
         terminal_column = 0;
         terminal_row++;
     }
+    else
+        put_char_at(c, terminal_color, terminal_row, terminal_column);
+    
     if(c != '\n' && ++terminal_column == 80)
     {
         terminal_column = 0;
@@ -44,7 +47,7 @@ void printf(const char* format, ...)
             format++;
             int digits = *format - '0';
             char buffer[20];
-            puts(itoa(va_arg(list, int), buffer, digits));
+            puts(itoa(va_arg(list, uint32_t), buffer, digits));
         }
         format++;
     }

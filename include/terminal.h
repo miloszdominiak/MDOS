@@ -4,7 +4,6 @@
 #include <colors.h>
 #include <stdint.h>
 
-uint8_t color(enum vga_color bg, enum vga_color fg);
 void set_color(enum vga_color bg, enum vga_color fg);
 
 void disable_cursor();

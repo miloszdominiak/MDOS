@@ -10,7 +10,7 @@ static const uint8_t VGA_WIDTH = 80, VGA_HEIGHT = 25;
 uint8_t terminal_color = COLOR(VGA_COLOR_BLACK, VGA_COLOR_LIGHT_GREY);
 uint8_t terminal_row, terminal_column;
 
-inline uint8_t color(enum vga_color bg, enum vga_color fg)
+static inline uint8_t color(enum vga_color bg, enum vga_color fg)
 {
     return COLOR(bg, fg);
 }
