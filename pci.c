@@ -49,5 +49,5 @@ void pci_enum()
         }
     }
 
-    printf("\nDisabled USB Legacy\n");
+    printf("Disabled USB Legacy\n");
 }
