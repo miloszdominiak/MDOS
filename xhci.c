@@ -1,4 +1,6 @@
 #include <xhci.h>
+#include <stdio.h>
+#include <pci.h>
 
 void xhci_init(uint8_t bus, uint8_t slot, uint8_t function)
 {
@@ -6,13 +8,12 @@ void xhci_init(uint8_t bus, uint8_t slot, uint8_t function)
     uint32_t offset = *(uint32_t*)(base + 0x10) >> 16 << 2;
 
     uint32_t xecp = base + offset;
-
-    uint8_t id;
+    
     while(offset > 0)
     {
         uint32_t capability = *(uint32_t*)xecp;
 
-        if(capability & 0xFF == 1)
+        if((capability & 0xFF) == 1)
         {
             printf("xHCI legacy before: %4", capability);
             capability = capability | 1 << 24;

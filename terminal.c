@@ -1,4 +1,5 @@
 #include <terminal.h>
+#include <ports.h>
 
 #define VGA_BUFFER 0xB8000;
 
