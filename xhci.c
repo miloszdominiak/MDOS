@@ -15,7 +15,7 @@ void xhci_init(uint8_t bus, uint8_t slot, uint8_t function)
 
         if((capability & 0xFF) == 1)
         {
-            printf("xHCI legacy before: %4", capability);
+            //printf("xHCI legacy before: %4", capability);
             capability = capability | 1 << 24;
             *(uint32_t*)xecp = capability;
 
@@ -29,7 +29,7 @@ void xhci_init(uint8_t bus, uint8_t slot, uint8_t function)
 
             *(uint32_t*)(xecp + 4) = 0;
 
-            printf(", after: %4\n", capability);
+            //printf(", after: %4\n", capability);
             break;
         }
 

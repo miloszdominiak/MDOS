@@ -1,6 +1,7 @@
 #include <terminal.h>
 #include <stdio.h>
-#include <acpi.h>
+#include <ps2.h>
+#include <interrupts.h>
 
 void kernel_main()
 {
@@ -10,5 +11,8 @@ void kernel_main()
     printf("MDOS\n");
     printf("----\n");
 
-    printf("PS2 present: %1\n", is_ps2_present());
+    
+
+    ps2_controller_init();
+    interrupts_init();
 }

@@ -7,7 +7,7 @@ void ehci_init(uint8_t bus, uint8_t slot, uint8_t function)
     uint8_t eecp = *(uint8_t*)((pci_read(bus, slot, function, 0x10, 4) & ~0xF) + 9);
     uint32_t capability = pci_read(bus, slot, function, eecp, 4);
 
-    printf("EHCI legacy before: %4", capability);
+    //printf("EHCI legacy before: %4", capability);
 
     pci_write(bus, slot, function, eecp, capability | (1 << 24));
 
@@ -20,5 +20,5 @@ void ehci_init(uint8_t bus, uint8_t slot, uint8_t function)
     }
 
     *(uint32_t*)(eecp + 4) = 0;
-    printf(", after: %4\n", capability);
+    //printf(", after: %4\n", capability);
 }
