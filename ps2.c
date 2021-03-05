@@ -107,5 +107,6 @@ void ps2_controller_init()
     printf("Config: %1\n", configuration);
 
     ps2_controller_send(0xAE);
+    ps2_controller_send(0xA8);
 
 }

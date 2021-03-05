@@ -30,7 +30,6 @@ void interrupts_init()
     IDT[33].Reserved = 0;
     IDT[33].Type = 0x8E;
     IDT[33].OffsetHigher = ((uint32_t)irq1 & 0xFFFF0000) >> 16;
-    printf("%4", IDT[3].OffsetHigher);
 
     IDT[34].OffsetLower = (uint32_t)irq2 & 0xFFFF;
     IDT[34].Selector = 0x8;

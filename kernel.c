@@ -1,7 +1,8 @@
 #include <terminal.h>
 #include <stdio.h>
 #include <ps2.h>
-#include <interrupts.h>
+extern void interrupts_init();
+#include <gdt.h>
 
 void kernel_main()
 {
@@ -14,5 +15,8 @@ void kernel_main()
     
 
     ps2_controller_init();
+    gdt_init();
     interrupts_init();
+
+    
 }
