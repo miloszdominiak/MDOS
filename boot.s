@@ -15,9 +15,9 @@ stack_bottom:
 stack_top:
 
 .section .text
-
 .global _start
 _start:
+    cli
     call kernel_main
     
 1:

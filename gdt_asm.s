@@ -2,7 +2,6 @@
 
 .section .text
 load_gdt:
-    cli
     lgdt 4(%esp)
 
     jmp $0x08,$reload

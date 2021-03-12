@@ -1,8 +1,8 @@
 #include <terminal.h>
 #include <stdio.h>
-#include <ps2.h>
-extern void interrupts_init();
 #include <gdt.h>
+#include <interrupts.h>
+#include <ps2.h>
 
 void kernel_main()
 {
@@ -11,12 +11,12 @@ void kernel_main()
 
     printf("MDOS\n");
     printf("----\n");
-
     
-
-    ps2_controller_init();
     gdt_init();
     interrupts_init();
 
-    
+    ps2_controller_init();
+
+    while(1)
+        asm("hlt");
 }

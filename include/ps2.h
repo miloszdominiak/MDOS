@@ -19,7 +19,10 @@
 #define PS2_CTRL_DISABLE_SECOND 0xA7
 #define PS2_CONFIG_BYTE_READ 0x20
 #define PS2_CONFIG_BYTE_WRITE 0x60
-#define PS2_SELFTEST 0xAA
+#define PS2_CTRL_SELFTEST 0xAA
+#define PS2_FIRST_TEST 0xAB
+
+#define PS2_TEST_SUCCESS 0x55
 
 void ps2_controller_init();
 void ps2_controller_send(uint8_t command);

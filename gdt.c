@@ -26,8 +26,5 @@ void gdt_init()
     gdtp.Size = sizeof(struct GDTSelector) * 3 - 1;
     gdtp.Offset = (uint32_t)GDT;
 
-    char* address = (void*)&GDT[1];
-    for(int i = 0; i < 8; i++)
-        printf("%1 ", address[i]);
     load_gdt(gdtp);
 }
