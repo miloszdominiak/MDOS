@@ -2,6 +2,7 @@
 #define PS_2
 
 #include <stdint.h>
+#include <circular.h>
 
 #define PS2_COMMAND 0x64
 #define PS2_STATUS 0x64
@@ -16,7 +17,8 @@
 #define PS2_CONFIG_SECOND_DISABLED (1 << 5)
 
 #define PS2_CTRL_DISABLE_FIRST 0xAD
-#define PS2_CTRL_DISABLE_SECOND 0xA7
+#define PS2_CTRL_DISABLE_SECOND 0xA8
+#define PS2_CTRL_ENABLE_FIRST 0xAE
 #define PS2_CONFIG_BYTE_READ 0x20
 #define PS2_CONFIG_BYTE_WRITE 0x60
 #define PS2_CTRL_SELFTEST 0xAA
@@ -24,9 +26,8 @@
 
 #define PS2_TEST_SUCCESS 0x55
 
+extern struct Circular keyboard_buffer;
+
 void ps2_controller_init();
-void ps2_controller_send(uint8_t command);
-uint8_t ps2_controller_read();
-uint8_t ps2_controller_status();
 
 #endif

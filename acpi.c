@@ -137,11 +137,15 @@ bool is_ps2_present()
     struct FADT* fadt = find_fadt();
     if(!fadt)
         return false;
-        
+    
+    printf(fadt->Header.Signature);
+    printf("\nLength: %2\n", fadt->Header.Length);
+    printf("Revision: %1\n", fadt->Header.Revision);
+
     if(fadt->Header.Revision < 3 || fadt->IAPCBootArch & 0x2)
         return true;
 
-    printf("DELL\n");
+    printf("Szukam DSDT\n");
     
     struct DSDT* dsdt = find_dsdt();
     if(!dsdt)

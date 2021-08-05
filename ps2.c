@@ -5,6 +5,14 @@
 #include <ports.h>
 #include <interrupts.h>
 #include <pic.h>
+#include <circular.h>
+
+struct Circular keyboard_buffer;
+
+static uint8_t ps2_controller_status()
+{
+    return inb(PS2_STATUS);
+}
 
 static void wait_for_write()
 {
@@ -14,11 +22,17 @@ static void wait_for_write()
 
 static uint8_t wait_for_read()
 {
-    int timeout = 1000000;
+    int timeout = 10000;
     while(!(ps2_controller_status() & PS2_CTRL_OUTPUT_FULL) && timeout)
         timeout--;
 
     return timeout;
+}
+
+static void ps2_controller_send(uint8_t command)
+{
+    wait_for_write();
+    outb(PS2_COMMAND, command);
 }
 
 static void disable_devices()
@@ -27,31 +41,7 @@ static void disable_devices()
     ps2_controller_send(PS2_CTRL_DISABLE_SECOND);
 }
 
-static void flush_buffer()
-{
-    uint8_t scancode;
-    while((scancode = ps2_controller_read()))
-        printf("f%1 \n", scancode);
-}
-
-uint8_t ps2_controller_status()
-{
-    return inb(PS2_STATUS);
-}
-
-void ps2_controller_send(uint8_t command)
-{
-    wait_for_write();
-    outb(PS2_COMMAND, command);
-}
-
-void ps2_data_write(uint8_t data)
-{
-    wait_for_write();
-    outb(PS2_DATA, data);
-}
-
-uint8_t ps2_controller_read()
+static uint8_t ps2_controller_read()
 {
     if(wait_for_read())
         return inb(PS2_DATA);
@@ -59,28 +49,46 @@ uint8_t ps2_controller_read()
     return 0;
 }
 
-uint8_t ps2_config_read()
+
+static void flush_buffer()
+{
+    while(ps2_controller_read())
+        ;
+}
+
+static void ps2_data_write(uint8_t data)
+{
+    wait_for_write();
+    outb(PS2_DATA, data);
+}
+
+static uint8_t ps2_config_read()
 {
     ps2_controller_send(PS2_CONFIG_BYTE_READ);
     return ps2_controller_read();
 }
 
-void ps2_config_write(uint8_t config)
+static void ps2_config_write(uint8_t config)
 {
     ps2_controller_send(PS2_CONFIG_BYTE_WRITE);
     ps2_data_write(config);
 }
 
-uint8_t ps2_controller_test()
+static uint8_t ps2_controller_test()
 {
     ps2_controller_send(PS2_CTRL_SELFTEST);
     return ps2_controller_read() == PS2_TEST_SUCCESS;
 }
 
-uint8_t ps2_first_test()
+static uint8_t ps2_first_test()
 {
     ps2_controller_send(PS2_FIRST_TEST);
     return !ps2_controller_read();
+}
+
+static void ps2_first_enable()
+{
+    ps2_controller_send(PS2_CTRL_ENABLE_FIRST);
 }
 
 void ps2_controller_init()
@@ -93,72 +101,75 @@ void ps2_controller_init()
     printf("PS2 controller present\n");
 
     disable_devices();
-    
     flush_buffer();
 
     uint8_t configuration = ps2_config_read();
-    printf("Config: %1\n", configuration);
-
     configuration &= ~(PS2_CONFIG_FIRST_INT_ENABLED | PS2_CONFIG_SECOND_INT_ENABLED);
-    printf("Ja chce: %1\n", configuration);
+
     ps2_config_write(configuration);
 
     if(!ps2_controller_test())
         return;
 
-    printf("Config: %1\n", configuration);
+    ps2_config_write(configuration);
    
     if(!ps2_first_test())
         return;
 
-    ps2_controller_send(0xAE);
-    flush_buffer();
-
-    ps2_data_write(0xFF);
-    flush_buffer();
-
-
-    ps2_data_write(0xF5);
-    flush_buffer();
-
-    ps2_data_write(0xF2);
-    flush_buffer();
-
-    printf("Tera czas na sterownik klawiaturowy\n");
-
-    
-    interrupt_install_handler(1, irq1);
-
-    disable_devices();
-
-    
 
     configuration |= PS2_CONFIG_FIRST_INT_ENABLED;
-    printf("Ja chce: %1\n", configuration);
     ps2_config_write(configuration);
 
-    ps2_controller_send(0xAE);
+    ps2_first_enable();
+
+    interrupt_install_handler(1, irq1);
+    circular_clear(&keyboard_buffer);
 
     ps2_data_write(0xFF);
-    flush_buffer();
-    //printf("%1", ps2_controller_read());
 
-    //configuration = ps2_config_read();
-    //printf("Config: %1\n", configuration);
-    
-     //ps2_controller_send(0xAE);
-    // flush_buffer();
+    while(circular_empty(&keyboard_buffer))
+        asm("hlt");
 
-    Chodź w ramiona pierdolona, zatańczymy sobie walca.
-    Ja cię klepnę raz po piździe, ty mnie klepniesz raz po jajcach.
-    O kurwa, o kurwa, jaki piękny walczyk!
-    Po chuju, po chuju mnie się z panią tańczy!
-    Ty kurwo, ty kurwo, nie depcz mi po palcach!
-    Bo jak ci wyjebię to nie skończysz walca!
+    //if(circular_pop(&keyboard_buffer) != 0xFA)
+    //;//    return;
+
+    while(circular_empty(&keyboard_buffer))
+        asm("hlt");
+
+    circular_clear(&keyboard_buffer);
+
+    printf("PS/2 init success\n");
+    ps2_data_write(0xF5);
+
+    while(circular_empty(&keyboard_buffer))
+        asm("hlt");
+
+    //if(circular_pop(&keyboard_buffer) != 0xFA)
+    //;//    return;
+
+    ps2_data_write(0xF3);
+
+    while(circular_empty(&keyboard_buffer))
+        asm("hlt");
+
+    printf("%1\n", circular_pop(&keyboard_buffer));
+
+    ps2_data_write(0x20);
+
+    while(circular_empty(&keyboard_buffer))
+        asm("hlt");
+
+    printf("%1\n", circular_pop(&keyboard_buffer));
+
+    printf("tu nie powinienem byc\n");
+
+    ps2_data_write(0xF4);
+
+    printf("Podobno spowolnilem\n");
 }
 
 void ps2_keyboard_interrupt()
 {
-    printf("i%1", inb(0x60));
+    circular_push(&keyboard_buffer, inb(PS2_DATA));
     pic_master_eoi();
 }

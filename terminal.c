@@ -4,7 +4,7 @@
 #define VGA_BUFFER 0xB8000;
 
 #define COLOR(bg,fg) bg << 4 | fg;
-#define VGA_ENTRY(c,color) color << 8 | c
+#define VGA_ENTRY(c,color) color << 8 | (uint8_t)c
 
 static const uint8_t VGA_WIDTH = 80, VGA_HEIGHT = 25;
 
