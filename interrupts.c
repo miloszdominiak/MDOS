@@ -15,12 +15,6 @@ void interrupts_init()
     idtp.Base = (uint32_t)IDT;
 
     load_idt(idtp);
-
-    IDT[PIC_MASTER_OFFSET + 7].OffsetLower = (uint32_t)unmaskable & 0xFFFF;
-        IDT[PIC_MASTER_OFFSET + 7].Selector = GDT_KERNEL_SELECTOR;
-        IDT[PIC_MASTER_OFFSET + 7].Reserved = 0;
-        IDT[PIC_MASTER_OFFSET + 7].Type = ISR_TYPE;
-        IDT[PIC_MASTER_OFFSET + 7].OffsetHigher = (uint32_t)unmaskable >> 16;
 }
 
 void interrupt_install_handler(uint8_t irq, void (*isr)())

@@ -91,6 +91,8 @@ static void ps2_first_enable()
     ps2_controller_send(PS2_CTRL_ENABLE_FIRST);
 }
 
+void (*isr_pointer[256])();
+
 void ps2_controller_init()
 {
     pci_enum();
@@ -122,7 +124,7 @@ void ps2_controller_init()
 
     ps2_first_enable();
 
-    interrupt_install_handler(1, irq1);
+    interrupt_install_handler(1, isr_pointer[178]);
     circular_clear(&keyboard_buffer);
 
     ps2_data_write(0xFF);

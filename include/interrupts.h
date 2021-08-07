@@ -26,11 +26,6 @@ struct IDTPointer
 void interrupts_init();
 void interrupt_install_handler(uint8_t irq, void (*isr)());
 
-void irq1();
-void unmaskable();
-
-void irq1_handler();
-
 void load_idt(struct IDTPointer idtp);
 
 #endif
