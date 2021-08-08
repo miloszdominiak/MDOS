@@ -1,5 +1,5 @@
-#ifndef INTERRUPTS_H
-#define INTERRUPTS_H
+#ifndef IDT_H
+#define IDT_H
 
 #include <stdint.h>
 
@@ -23,9 +23,9 @@ struct IDTPointer
     uint32_t Base;
 } __attribute__((packed));
 
-void interrupts_init();
-void interrupt_install_handler(uint8_t irq, void (*isr)());
+typedef void (*ISRPointer)();
 
-void load_idt(struct IDTPointer idtp);
+void idt_init();
+void idt_register_handler(uint8_t number, ISRPointer isr);
 
 #endif

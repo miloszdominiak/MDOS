@@ -1,9 +1,11 @@
 #include <terminal.h>
 #include <stdio.h>
 #include <gdt.h>
-#include <interrupts.h>
+#include <idt.h>
 #include <ps2.h>
 #include <circular.h>
+#include <pci.h>
+#include <acpi.h>
 
 char scancode_to_character[] = 
 { 0, 0, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b', '\t',
@@ -22,11 +24,17 @@ void kernel_main()
 
     printf("MDOS\n");
     printf("----\n");
-    
-    gdt_init();
-    interrupts_init();
 
-    ps2_controller_init();
+    gdt_init();
+    idt_init();
+
+    pci_enum();
+
+    if(is_ps2_present())
+    {
+        printf("PS2 controller present\n");
+        ps2_controller_init();
+    }
 
     while(1)
     {

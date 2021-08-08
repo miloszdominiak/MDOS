@@ -1,5 +1,5 @@
-.extern ps2_keyboard_interrupt
-.extern isr_pointer
+.extern isr_table
+.extern stub_table
 
 .global load_idt
 
@@ -7,14 +7,15 @@
 .global isr_stub\number
 isr_stub\number:
     pusha
-    call ps2_keyboard_interrupt
+    mov (isr_table + 4 * \number), %eax
+    call %eax
     popa
     iret
 .endm
 
 .macro load_stub number
     lea isr_stub\number, %eax
-    mov %eax, (isr_pointer + 4 * \number)
+    mov %eax, (stub_table + 4 * \number)
 .endm
 
 .section .text

@@ -9,6 +9,7 @@
 #define PIC_SLAVE_DATA 0xA1
 
 #define PIC_COMMAND_INIT 0x11
+#define PIC_COMMAND_IRR 0x0A
 #define PIC_COMMAND_ISR 0x0B
 #define PIC_COMMAND_EOI 0x20
 
@@ -25,7 +26,7 @@
 #define PIC_MASK_ALL 0xFF
 #define PIC_MASK(a) (1 << a)
 
-void pic_remap();
+void pic_init();
 
 void pic_master_eoi();
 void pic_slave_eoi();
@@ -33,5 +34,6 @@ void pic_master_mask_set(uint8_t mask);
 void pic_slave_mask_set(uint8_t mask);
 uint8_t pic_master_mask_read();
 uint8_t pic_slave_mask_read();
+uint8_t pic_master_isr();
 
 #endif

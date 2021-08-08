@@ -22,7 +22,7 @@ void pic_slave_data(uint8_t data)
     outb(PIC_SLAVE_DATA, data);
 }
 
-void pic_init()
+void pic_initialize()
 {
     pic_master_send(PIC_COMMAND_INIT);
     pic_slave_send(PIC_COMMAND_INIT);
@@ -66,9 +66,9 @@ uint8_t pic_slave_mask_read()
     return inb(PIC_SLAVE_DATA);
 }
 
-void pic_remap()
+void pic_init()
 {
-    pic_init();
+    pic_initialize();
     pic_offset(PIC_MASTER_OFFSET, PIC_SLAVE_OFFSET);
     pic_cascade(PIC_MASTER_CASCADE, PIC_SLAVE_CASCADE);
     pic_mode(PIC_MODE_X86, PIC_MODE_X86);
@@ -84,4 +84,10 @@ void pic_master_eoi()
 void pic_slave_eoi()
 {
     pic_slave_send(PIC_COMMAND_EOI);
+}
+
+uint8_t pic_master_isr()
+{
+    pic_master_send(PIC_COMMAND_ISR);
+    return inb(PIC_MASTER_COMMAND);
 }

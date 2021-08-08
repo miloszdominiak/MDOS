@@ -3,9 +3,10 @@
 #include <acpi.h>
 #include <stdio.h>
 #include <ports.h>
-#include <interrupts.h>
+#include <idt.h>
 #include <pic.h>
 #include <circular.h>
+#include <irq.h>
 
 struct Circular keyboard_buffer;
 
@@ -91,17 +92,22 @@ static void ps2_first_enable()
     ps2_controller_send(PS2_CTRL_ENABLE_FIRST);
 }
 
-void (*isr_pointer[256])();
+void ps2_keyboard_interrupt()
+{
+    circular_push(&keyboard_buffer, inb(PS2_DATA));
+    pic_master_eoi();
+}
+
+void mysza()
+{
+    printf("mysza");
+    inb(PS2_DATA);
+    pic_slave_eoi();
+    pic_master_eoi();
+}
 
 void ps2_controller_init()
 {
-    pci_enum();
-
-    if(!is_ps2_present())
-        return;
-
-    printf("PS2 controller present\n");
-
     disable_devices();
     flush_buffer();
 
@@ -118,13 +124,15 @@ void ps2_controller_init()
     if(!ps2_first_test())
         return;
 
-
-    configuration |= PS2_CONFIG_FIRST_INT_ENABLED;
+    configuration |= (PS2_CONFIG_FIRST_INT_ENABLED | PS2_CONFIG_SECOND_INT_ENABLED);
     ps2_config_write(configuration);
 
     ps2_first_enable();
+    
+    ps2_controller_send(0xA8);
 
-    interrupt_install_handler(1, isr_pointer[178]);
+    irq_install_handler(1, ps2_keyboard_interrupt);
+
     circular_clear(&keyboard_buffer);
 
     ps2_data_write(0xFF);
@@ -163,15 +171,15 @@ void ps2_controller_init()
 
     printf("%1\n", circular_pop(&keyboard_buffer));
 
-    printf("tu nie powinienem byc\n");
+    ps2_data_write(0xF4);
+
+    ps2_controller_send(0xD4);
+
+    for(int i = 0; i < 10000; i++)
+        ;
 
     ps2_data_write(0xF4);
 
-    printf("Podobno spowolnilem\n");
+
 }
 
-void ps2_keyboard_interrupt()
-{
-    circular_push(&keyboard_buffer, inb(PS2_DATA));
-    pic_master_eoi();
-}
