@@ -37,15 +37,5 @@ void kernel_main()
     }
 
     while(1)
-    {
-        while(!circular_empty(&keyboard_buffer))
-        {
-            putc(scancode_to_character[circular_pop(&keyboard_buffer)]);
-            set_cursor(terminal_row, terminal_column);
-        }
-        asm("hlt");
-    }
-
-    while(1)
         asm("hlt");
 }

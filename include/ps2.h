@@ -17,17 +17,25 @@
 #define PS2_CONFIG_SECOND_DISABLED (1 << 5)
 
 #define PS2_CTRL_DISABLE_FIRST 0xAD
-#define PS2_CTRL_DISABLE_SECOND 0xA8
+#define PS2_CTRL_DISABLE_SECOND 0xA7
 #define PS2_CTRL_ENABLE_FIRST 0xAE
+#define PS2_CTRL_ENABLE_SECOND 0xA8
 #define PS2_CONFIG_BYTE_READ 0x20
 #define PS2_CONFIG_BYTE_WRITE 0x60
 #define PS2_CTRL_SELFTEST 0xAA
 #define PS2_FIRST_TEST 0xAB
+#define PS2_SECOND_TEST 0xA9
 
-#define PS2_TEST_SUCCESS 0x55
+#define PS2_CTRL_TEST_SUCCESS 0x55
 
-extern struct Circular keyboard_buffer;
+#define PS2_DEVICE_RESET 0xFF
+#define PS2_DEVICE_DISABLE_SCANNING 0xF5
+#define PS2_DEVICE_IDENTIFY 0xF2
+
+#define PS2_DEVICE_TEST_PASSED 0xAA
+#define PS2_DEVICE_ACKNOWLEDGE 0xFA
 
 void ps2_controller_init();
+uint32_t ps2_wait_for_write();
 
 #endif
