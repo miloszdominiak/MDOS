@@ -45,3 +45,8 @@ void terminal_initialize()
     terminal_row = terminal_column = 0;
     set_cursor(terminal_row, terminal_column);
 }
+
+void update_cursor()
+{
+    set_cursor(terminal_row, terminal_column);
+}

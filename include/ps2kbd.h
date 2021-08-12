@@ -17,5 +17,6 @@
 #define PS2_KBD_RATE_MIN 0x1F
 
 void ps2_keyboard_init();
+void scancode_translator();
 
 #endif

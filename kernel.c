@@ -6,6 +6,8 @@
 #include <circular.h>
 #include <pci.h>
 #include <acpi.h>
+#include <keypress.h>
+#include <ps2kbd.h>
 
 char scancode_to_character[] = 
 { 0, 0, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b', '\t',
@@ -16,6 +18,9 @@ char scancode_to_character[] =
 '2', '3', '0', '.'};
 
 extern uint8_t terminal_color, terminal_row, terminal_column;
+
+extern struct Circular scancode_buffer;
+extern struct KeypressBuffer keypress_buffer;
 
 void kernel_main()
 {
@@ -34,6 +39,15 @@ void kernel_main()
     {
         printf("PS2 controller present\n");
         ps2_controller_init();
+    }
+
+    while(1)
+    {
+        for(int i = 0; i < 100000000; i++)
+            if(!(i % 10000000))
+                printf("%1 ", i / 10000000);
+        printf("\n");
+        putc(scanf());
     }
 
     while(1)

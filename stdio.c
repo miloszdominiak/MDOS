@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <terminal.h>
+#include <circular.h>
+#include <keypress.h>
+#include <ps2kbd.h>
+
+extern struct Circular scancode_buffer;
+extern struct KeypressBuffer keypress_buffer;
 
 extern uint8_t terminal_color, terminal_row, terminal_column;
 
@@ -12,9 +18,20 @@ void putc(char c)
 
     if(c == '\b')
     {
+        if(terminal_column != 0)
+        {
         terminal_column -= 1;
         putc(' ');
         terminal_column -= 2;
+        }
+        else
+        {
+            terminal_row--;
+            terminal_column = 79;
+            putc(' ');
+            terminal_row--;
+            terminal_column = 78;
+        }
     }
     else if(c == '\n')
     {
@@ -61,4 +78,23 @@ void printf(const char* format, ...)
     }
     va_end(list);
     set_cursor(terminal_row, terminal_column);
+}
+
+uint8_t scanf()
+{
+    while(1)
+    {
+        while(!circular_empty(&scancode_buffer))
+        {
+            scancode_translator();
+
+            if(!keypress_empty(&keypress_buffer))
+            {
+                struct Keypress keypress = keypress_pop(&keypress_buffer);
+                if(keypress.pressed)
+                    return keypress.ascii;
+            }
+        }
+    asm("hlt");
+    }
 }

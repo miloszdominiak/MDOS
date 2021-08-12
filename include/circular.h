@@ -2,8 +2,7 @@
 #define CIRCULAR_H
 
 #include <stdint.h>
-
-#define CIRCULAR_SIZE 5
+#define CIRCULAR_SIZE 64
 
 struct Circular
 {
