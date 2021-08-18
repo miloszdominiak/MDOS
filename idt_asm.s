@@ -8,7 +8,7 @@
 isr_stub\number:
     pusha
     mov (isr_table + 4 * \number), %eax
-    call %eax
+    call *%eax
     popa
     iret
 .endm

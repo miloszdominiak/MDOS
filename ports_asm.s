@@ -3,6 +3,7 @@
 .global inb
 .global inw
 .global ind
+.global chuj
 
 .section .text
 outb:
@@ -46,4 +47,3 @@ ind:
     in %dx, %eax
     leave
     ret
-

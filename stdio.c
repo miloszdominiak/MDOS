@@ -70,31 +70,20 @@ void printf(const char* format, ...)
         else
         {
             format++;
-            int digits = *format - '0';
-            char buffer[20];
-            puts(itoa(va_arg(list, uint32_t), buffer, digits));
+            if(*format != 'c')
+            {
+                int digits = *format - '0';
+                char buffer[20];
+                puts(itoa(va_arg(list, uint32_t), buffer, digits));
+            }
+            else
+            {
+                putc((uint8_t)va_arg(list, uint32_t));
+                update_cursor();
+            }
         }
         format++;
     }
     va_end(list);
     set_cursor(terminal_row, terminal_column);
-}
-
-uint8_t scanf()
-{
-    while(1)
-    {
-        while(!circular_empty(&scancode_buffer))
-        {
-            scancode_translator();
-
-            if(!keypress_empty(&keypress_buffer))
-            {
-                struct Keypress keypress = keypress_pop(&keypress_buffer);
-                if(keypress.pressed)
-                    return keypress.ascii;
-            }
-        }
-    asm("hlt");
-    }
 }

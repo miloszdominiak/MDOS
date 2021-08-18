@@ -3,13 +3,14 @@
 .set CHECKSUM, -(MAGIC + FLAGS)
 
 .section .multiboot
-.align 4
-.long MAGIC
-.long FLAGS
-.long CHECKSUM
+    .align 4
+    .long MAGIC
+    .long FLAGS
+    .long CHECKSUM
 
 .section .bss
-.align 16
+    .align 16
+
 stack_bottom:
     .skip 16384
 stack_top:
@@ -17,9 +18,10 @@ stack_top:
 .section .text
 .global _start
 _start:
-    cli
+    mov $stack_top, %esp
     call kernel_main
+    cli
     
-1:
+end_loop:
     hlt
-    jmp 1b
+    jmp end_loop
