@@ -19,6 +19,9 @@ stack_top:
     .skip 16384
 drugi_stack:
 
+.global freememory
+freememory:
+
 .section .text
 .global _start
 _start:

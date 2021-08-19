@@ -11,7 +11,7 @@ switch_thread:
     mov current_thread_info, %edi
     mov %esp, (%edi)
 
-    mov 5 * 4(%esp), %esi
+    mov (5 * 4)(%esp), %esi
     mov %esi, current_thread_info
 
     mov (%esi), %esp

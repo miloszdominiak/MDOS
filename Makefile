@@ -1,6 +1,6 @@
 CC = /home/mdominiak/opt/cross/bin/i686-elf-gcc
 AS = /home/mdominiak/opt/cross/bin/i686-elf-as
-CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror -g
+CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror
 OBJ = \
 out/boot_asm.o \
 out/kernel.o \

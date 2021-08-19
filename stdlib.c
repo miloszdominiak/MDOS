@@ -1,5 +1,18 @@
 #include <stdlib.h>
 
+#include <stdio.h>
+
+extern uint8_t freememory;
+
+uint8_t* free_memory_pointer = &freememory;
+
+void* malloc(uint32_t size)
+{
+    void* memory_pointer = free_memory_pointer;
+    free_memory_pointer += size;
+    return memory_pointer;
+}
+
 static char dtoh(uint8_t digit)
 {
     switch(digit)
