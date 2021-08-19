@@ -1,18 +1,18 @@
-.global switch_thread
-.extern current_thread_info
+.global thread_switch
+.extern current_thread
 
 .section .text
-switch_thread:
+thread_switch:
     push %ebx
     push %esi
     push %edi
     push %ebp
 
-    mov current_thread_info, %edi
+    mov current_thread, %edi
     mov %esp, (%edi)
 
     mov (5 * 4)(%esp), %esi
-    mov %esi, current_thread_info
+    mov %esi, current_thread
 
     mov (%esi), %esp
 

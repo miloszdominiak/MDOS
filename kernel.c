@@ -10,13 +10,25 @@
 
 uint32_t count = 0;
 
-// struct ThreadInfo kernelthread;
-// struct ThreadInfo next;
+void druga()
+{
+    while(1)
+    {
+        printf("b");
+        thread_next();
+    }
+}
 
-struct ThreadInfo* current_thread_info;
+void trzecia()
+{
+    while(1)
+    {
+        printf("c");
+        thread_next();
+    }
+}
 
-// int switch_thread(struct ThreadInfo* next_thread_info);
-// extern uint32_t drugi_stack;
+extern struct ThreadInfo* current_thread;
 
 void kernel_main()
 {
@@ -30,31 +42,23 @@ void kernel_main()
     idt_init();
     pci_enum();
 
-    printf("%4\n", malloc(5));
-    printf("%4\n", malloc(1));
-    printf("%4\n", malloc(1));
-    printf("%4\n", malloc(1));
-
-    //irq_install_handler(0, timer);
-    // irq_install_handler(1, klawiatura);
-    // uint32_t* wskaznik_na_stack = &drugi_stack;
-    // wskaznik_na_stack--;
-
-    // *wskaznik_na_stack = (uint32_t)druga_funkcja;
-    // wskaznik_na_stack -= 4;
-
-    // next.stack_address = (uint32_t)wskaznik_na_stack;
-    // set_color(VGA_COLOR_BROWN, VGA_COLOR_BLACK);
-    // int dupa = 0;
-    // while(1)
-    // {
-    //     for(int i = 0; i < 100000000; i++)
-    //         ;
-        
-
-    //      printf("%1 ", dupa++);
-    // }
-    // while(1)
-    //     asm("hlt");
+    struct ThreadInfo* kernel_thread = threads_init();
+    struct ThreadInfo* drugi_thread = thread_create(druga);
+    struct ThreadInfo* trzeci_thread = thread_create(trzecia);
     
+    kernel_thread->name = "kernel\n";
+    drugi_thread->name = "drugi\n";
+    trzeci_thread->name = "trzeci\n";
+    
+    kernel_thread->next = drugi_thread;
+    drugi_thread->next = trzeci_thread;
+    trzeci_thread->next = kernel_thread;
+
+    
+    for(int i = 0; i < 3; i++)
+    {
+        printf("a");
+        thread_next();
+        printf("\n");
+    }
 }

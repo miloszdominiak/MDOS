@@ -15,10 +15,6 @@ stack_bottom:
     .skip 16384
 stack_top:
 
-.global drugi_stack
-    .skip 16384
-drugi_stack:
-
 .global freememory
 freememory:
 

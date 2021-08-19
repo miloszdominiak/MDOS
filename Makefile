@@ -18,7 +18,8 @@ out/ehci.o \
 out/xhci.o \
 out/stdlib.o \
 out/irq.o \
-out/threads_asm.o
+out/threads.o \
+out/threads_asm.o 
 
 all: out/myos.bin
 	cp out/myos.bin isodir/boot/myos.bin
