@@ -1,5 +1,8 @@
 .global thread_switch
+
 .extern current_thread
+.extern thread_running
+.extern thread_ready
 
 .section .text
 thread_switch:
@@ -7,6 +10,8 @@ thread_switch:
     push %esi
     push %edi
     push %ebp
+
+    call thread_ready
 
     mov current_thread, %edi
     mov %esp, (%edi)
@@ -16,10 +21,11 @@ thread_switch:
 
     mov (%esi), %esp
 
+    call thread_running
+
     pop %ebp
     pop %edi
     pop %esi
     pop %ebx
 
-    sti
     ret

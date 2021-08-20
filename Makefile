@@ -19,7 +19,12 @@ out/xhci.o \
 out/stdlib.o \
 out/irq.o \
 out/threads.o \
-out/threads_asm.o 
+out/threads_asm.o \
+out/ps2.o \
+out/ps2kbd.o \
+out/circular.o \
+out/keypress.o \
+out/keymaps.o
 
 all: out/myos.bin
 	cp out/myos.bin isodir/boot/myos.bin

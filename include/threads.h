@@ -11,11 +11,23 @@ struct ThreadInfo
     char *name;
 };
 
+enum ThreadState
+{
+    THREAD_STATE_BLOCKED,
+    THREAD_STATE_READY_TO_RUN,
+    THREAD_STATE_RUNNING
+};
+
 typedef void (*ThreadFunction)();
 
 struct ThreadInfo* threads_init();
 struct ThreadInfo* thread_create(ThreadFunction function);
 void thread_switch(struct ThreadInfo* next_thread);
-void thread_next();
+void thread_block();
+void thread_unblock(struct ThreadInfo* thread);
+void schedule();
+void scheduler_push();
+void scheduler_lock();
+void scheduler_unlock();
 
 #endif
