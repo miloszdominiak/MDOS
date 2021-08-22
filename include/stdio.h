@@ -6,6 +6,6 @@
 void putc(char c);
 void puts(const char* str);
 void printf(const char* format, ...);
-uint8_t scanf();
+uint8_t scanf(const char* format, ...);
 
 #endif

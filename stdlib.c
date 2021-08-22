@@ -51,3 +51,25 @@ char* itoa(uint32_t number, char* buffer, int bytes)
     }
     return buffer;
 }
+
+static int digit_to_int(char digit)
+{
+    if(digit >= '0' && digit <= '9')
+        return digit - '0';
+    else if(digit >= 'a' && digit <= 'z')
+        return digit - 'a' + 10;
+    else
+        return digit - 'A' + 10;
+}
+
+int strtol(const char* str, const char* endptr, int base)
+{
+    (void)endptr;
+    int result = 0;
+    while(*str)
+    {
+        result *= base;
+        result += digit_to_int(*str++);
+    }
+    return result;
+}

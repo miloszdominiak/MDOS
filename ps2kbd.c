@@ -7,6 +7,7 @@
 #include <keymaps.h>
 #include <keypress.h>
 #include <threads.h>
+#include <terminal.h>
 
 struct Circular scancode_buffer;
 struct KeypressBuffer keypress_buffer;
@@ -37,6 +38,7 @@ static uint8_t typematic_byte(uint8_t rate, uint8_t delay)
     return (delay << 5) | rate;
 }
 
+#include <stdio.h>
 static void keyboard_interrupt()
 {
     circular_push(&scancode_buffer, inb(PS2_KBD_DATA));
@@ -71,10 +73,13 @@ void keycode_translator(uint8_t keycode)
     }
 
     if(key_state[keycode])
+    {
         keypress.pressed = 1;
+        putc(keypress.ascii);
+        update_cursor();
+    }
     else
         keypress.pressed = 0;
-    
     keypress_push(&keypress_buffer, keypress);
 }
  

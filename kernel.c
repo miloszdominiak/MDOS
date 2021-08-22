@@ -8,8 +8,7 @@
 #include <pic.h>
 #include <stdlib.h>
 #include <ps2.h>
-#include <keypress.h>
-
+#include <string.h>
 
 uint32_t count = 0;
 
@@ -17,13 +16,14 @@ extern struct ThreadInfo* first_ready_to_run;
 extern struct ThreadInfo* last_ready_to_run;
 
 extern struct KeypressBuffer keypress_buffer;
-extern uint8_t key_state[];
+
+char *dupa = 0;
 
 void timer()
 {
     count++;
     pic_master_eoi();
-    if(!(count % 5))
+    if(!(count % 10))
     {
         //printf("-");
         scheduler_lock();
@@ -39,6 +39,7 @@ void kernel_main()
 
     printf("MDOS\n");
     printf("----\n");
+    printf("%1", dupa);
 
     gdt_init();
     idt_init();
@@ -50,22 +51,22 @@ void kernel_main()
 
     ps2_controller_init();
 
+    char line[50];
     while(1)
     {
-        // if(!keypress_empty(&keypress_buffer))
+        printf(">");
+        scanf("%s", line);
+        char* command = strtok(line, ' ');
+        printf(command);
+        
+        // if(!strcmp(command, "inb"))
         // {
-        //     struct Keypress key = keypress_pop(&keypress_buffer);
-        //     if(key.pressed)
-        //         putc(key.ascii);
-        //     update_cursor();
-        // }
-        while(key_state[0x01])
-        {
-            printf("a");
+        //     //char* argument = strtok(NULL, '\n');
 
-        for(int i = 0; i < 1000000; i++);
-        }
-        for(int i = 0; i < 1000000; i++);
-        printf("czekam ");
+        //     //printf("%1", strtol(argument, NULL, 16) * 2);
+        // }
+        // else if(!strcmp(command, "outb"))
+        // {
+        // }
     }
 }

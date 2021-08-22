@@ -6,10 +6,7 @@
 #include <keypress.h>
 #include <ps2kbd.h>
 
-extern struct Circular scancode_buffer;
 extern struct KeypressBuffer keypress_buffer;
-
-extern uint8_t terminal_color, terminal_row, terminal_column;
 
 void putc(char c)
 {
@@ -86,4 +83,49 @@ void printf(const char* format, ...)
     }
     va_end(list);
     set_cursor(terminal_row, terminal_column);
+}
+
+uint8_t scanf(const char* format, ...)
+{
+    va_list list;
+    va_start(list, format);
+
+    while(*format)
+    {
+        if(*format == '%')
+        {
+            format++;
+            if(*format == 'c')
+            {
+                char* dest = va_arg(list, char*);
+                while(1)
+                {
+                    while(keypress_empty(&keypress_buffer))
+                        asm("hlt");
+
+                    struct Keypress keypress = keypress_pop(&keypress_buffer);
+                
+                    if(keypress.pressed)
+                    {
+                        *dest = keypress.ascii;
+                        return 1;
+                    }
+                }
+            }
+            else if(*format == 's')
+            {
+                char* dest = va_arg(list, char*);
+                char znak;
+                do
+                {
+                    scanf("%c", &znak);
+                    *dest++ = znak;
+                } while(znak != '\n');
+                *dest = 0;  
+            }
+        }
+        format++;
+    }
+    va_end(list);
+    return 0;
 }

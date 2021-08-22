@@ -10,21 +10,7 @@ SECTIONS
         *(.text)
     }
 
-    .rodata :
-    {
-        *(.rodata)
-    }
+    
 
-    .data :
-    {
-        *(.data)
-    }
 
-    .bss :
-    {
-        *(COMMON)
-        *(.bss)
-    }
-
-    /DISCARD/ : {*(*)}
 }

@@ -64,3 +64,24 @@ int8_t memcmp(void* f, void* s, uint16_t size)
 
     return 0;
 }
+
+char* sperma = 0;
+
+char* strtok(char* str, char delimiter)
+{
+
+    sperma = str;
+    char* iter = sperma;
+
+    while(*iter != 0)
+    {
+        if(*iter == delimiter)
+        {
+            *iter = 0;
+            return sperma;
+        }
+        iter++;
+    }
+    
+    return sperma;
+}
