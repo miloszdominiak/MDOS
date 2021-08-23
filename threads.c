@@ -14,6 +14,7 @@ struct ThreadInfo* threads_init()
     struct ThreadInfo* thread_info = malloc(sizeof(struct ThreadInfo));
     current_thread = thread_info;
     thread_info->state = THREAD_STATE_RUNNING;
+    thread_info->next = 0;
     return thread_info;
 }
 
@@ -26,6 +27,7 @@ struct ThreadInfo* thread_create(ThreadFunction function)
     thread_stack -= 4;
 
     thread_info->esp = thread_stack;
+    thread_info->next = 0;
 
     scheduler_push(thread_info);
 

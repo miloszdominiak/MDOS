@@ -2,9 +2,7 @@
 
 #include <stdio.h>
 
-extern uint8_t freememory;
-
-uint8_t* free_memory_pointer = &freememory;
+uint8_t* free_memory_pointer = (uint8_t*)0x200000;
 
 void* malloc(uint32_t size)
 {
@@ -58,9 +56,13 @@ static int digit_to_int(char digit)
         return digit - '0';
     else if(digit >= 'a' && digit <= 'z')
         return digit - 'a' + 10;
-    else
+    else if(digit >= 'A' && digit <= 'Z')
         return digit - 'A' + 10;
+        
+    return 0;
 }
+
+#include <stdio.h>
 
 int strtol(const char* str, const char* endptr, int base)
 {

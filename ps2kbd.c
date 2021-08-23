@@ -56,6 +56,9 @@ static uint8_t scancode_read()
 
 uint8_t key_state[256];
 
+uint8_t nie_buforuj;
+uint8_t echo;
+
 void keycode_translator(uint8_t keycode)
 {
     struct Keypress keypress;
@@ -75,12 +78,14 @@ void keycode_translator(uint8_t keycode)
     if(key_state[keycode])
     {
         keypress.pressed = 1;
-        putc(keypress.ascii);
+        if(echo)
+            putc(keypress.ascii);
         update_cursor();
     }
     else
         keypress.pressed = 0;
-    keypress_push(&keypress_buffer, keypress);
+    if(!nie_buforuj)
+        keypress_push(&keypress_buffer, keypress);
 }
  
 void scancode_translator()

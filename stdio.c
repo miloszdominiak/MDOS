@@ -105,7 +105,7 @@ uint8_t scanf(const char* format, ...)
 
                     struct Keypress keypress = keypress_pop(&keypress_buffer);
                 
-                    if(keypress.pressed)
+                    if(keypress.ascii && keypress.pressed)
                     {
                         *dest = keypress.ascii;
                         return 1;
@@ -119,7 +119,10 @@ uint8_t scanf(const char* format, ...)
                 do
                 {
                     scanf("%c", &znak);
-                    *dest++ = znak;
+                    if(znak == '\b')
+                        *dest-- = 0;
+                    else
+                        *dest++ = znak;
                 } while(znak != '\n');
                 *dest = 0;  
             }

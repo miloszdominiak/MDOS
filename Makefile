@@ -1,6 +1,6 @@
 CC = /home/mdominiak/opt/cross/bin/i686-elf-gcc
 AS = /home/mdominiak/opt/cross/bin/i686-elf-as
-CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror
+CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror -g
 OBJ = \
 out/boot_asm.o \
 out/kernel.o \
@@ -25,7 +25,8 @@ out/ps2kbd.o \
 out/circular.o \
 out/keypress.o \
 out/keymaps.o \
-out/string.o
+out/string.o \
+out/terminal_asm.o
 
 all: out/myos.bin
 	cp out/myos.bin isodir/boot/myos.bin

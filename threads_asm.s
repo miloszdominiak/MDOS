@@ -11,11 +11,12 @@ thread_switch:
     push %edi
     push %ebp
 
-    call thread_ready
+    
 
     mov current_thread, %edi
     mov %esp, (%edi)
 
+    call thread_ready
     mov (5 * 4)(%esp), %esi
     mov %esi, current_thread
 
