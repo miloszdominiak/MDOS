@@ -415,53 +415,55 @@ void write_regs(unsigned char *regs)
    unsigned i;
 
 /* write MISCELLANEOUS reg */
-   outportb(VGA_MISC_WRITE, *regs);
+   outb(VGA_MISC_WRITE, *regs);
    regs++;
 /* write SEQUENCER regs */
    for(i = 0; i < VGA_NUM_SEQ_REGS; i++)
    {
-      outportb(VGA_SEQ_INDEX, i);
-      outportb(VGA_SEQ_DATA, *regs);
+      outb(VGA_SEQ_INDEX, i);
+      outb(VGA_SEQ_DATA, *regs);
       regs++;
    }
 /* unlock CRTC registers */
-   outportb(VGA_CRTC_INDEX, 0x03);
-   outportb(VGA_CRTC_DATA, inportb(VGA_CRTC_DATA) | 0x80);
-   outportb(VGA_CRTC_INDEX, 0x11);
-   outportb(VGA_CRTC_DATA, inportb(VGA_CRTC_DATA) & ~0x80);
+   outb(VGA_CRTC_INDEX, 0x03);
+   outb(VGA_CRTC_DATA, inb(VGA_CRTC_DATA) | 0x80);
+   outb(VGA_CRTC_INDEX, 0x11);
+   outb(VGA_CRTC_DATA, inb(VGA_CRTC_DATA) & ~0x80);
 /* make sure they remain unlocked */
    regs[0x03] |= 0x80;
    regs[0x11] &= ~0x80;
 /* write CRTC regs */
    for(i = 0; i < VGA_NUM_CRTC_REGS; i++)
    {
-      outportb(VGA_CRTC_INDEX, i);
-      outportb(VGA_CRTC_DATA, *regs);
+      outb(VGA_CRTC_INDEX, i);
+      outb(VGA_CRTC_DATA, *regs);
       regs++;
    }
 /* write GRAPHICS CONTROLLER regs */
    for(i = 0; i < VGA_NUM_GC_REGS; i++)
    {
-      outportb(VGA_GC_INDEX, i);
-      outportb(VGA_GC_DATA, *regs);
+      outb(VGA_GC_INDEX, i);
+      outb(VGA_GC_DATA, *regs);
       regs++;
    }
 /* write ATTRIBUTE CONTROLLER regs */
    for(i = 0; i < VGA_NUM_AC_REGS; i++)
    {
-      (void)inportb(VGA_INSTAT_READ);
-      outportb(VGA_AC_INDEX, i);
-      outportb(VGA_AC_WRITE, *regs);
+      (void)inb(VGA_INSTAT_READ);
+      outb(VGA_AC_INDEX, i);
+      outb(VGA_AC_WRITE, *regs);
       regs++;
    }
 /* lock 16-color palette and unblank display */
-   (void)inportb(VGA_INSTAT_READ);
-   outportb(VGA_AC_INDEX, 0x20);
+   (void)inb(VGA_INSTAT_READ);
+   outb(VGA_AC_INDEX, 0x20);
 }
 
 void set_vga_300x220(void) {
   write_regs(g_320x200x256);
 }
+
+uint8_t* vga_graphics = (uint8_t*)0xa0000;
 
 void kernel_main()
 {
@@ -484,7 +486,7 @@ void kernel_main()
 
     outb(0x43, 0xB6);
 
-     
+    
 
     char line[50];
     while(1)
@@ -506,6 +508,13 @@ void kernel_main()
         if(!strcmp(command, "clr"))
         {
             terminal_initialize();
+        }
+        if(!strcmp(command, "magic"))
+        {
+            set_vga_300x220();
+            for(int i = 0; i < 64000; i++)
+        vga_graphics[i] = i % 9;
+            while(1);
         }
         if(!strcmp(command, "piano"))
         {
