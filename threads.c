@@ -1,7 +1,19 @@
 #include <threads.h>
 #include <stdlib.h>
+#include <irq.h>
+#include <pic.h>
 
-#include <stdio.h>
+uint32_t count = 0;
+
+void timer()
+{
+    count++;
+    pic_master_eoi();
+    
+    scheduler_lock();
+    schedule();
+    scheduler_unlock();
+}
 
 struct ThreadInfo* current_thread;
 struct ThreadInfo* first_ready_to_run;
@@ -11,6 +23,7 @@ uint32_t cli_lock;
 
 struct ThreadInfo* threads_init()
 {
+    irq_install_handler(0, timer);
     struct ThreadInfo* thread_info = malloc(sizeof(struct ThreadInfo));
     current_thread = thread_info;
     thread_info->state = THREAD_STATE_RUNNING;

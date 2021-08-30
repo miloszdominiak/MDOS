@@ -17,6 +17,8 @@ void putc(char c)
     {
         if(terminal_column != 0)
         {
+            putc(' ');
+            terminal_column--;
         terminal_column -= 1;
         putc(' ');
         terminal_column -= 2;
@@ -32,6 +34,7 @@ void putc(char c)
     }
     else if(c == '\n')
     {
+        putc(' ');
         terminal_column = 0;
         terminal_row++;
     }

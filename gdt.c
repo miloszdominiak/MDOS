@@ -21,9 +21,11 @@ void gdt_init()
     gdt_store(0x0, 0x0, 0x0, 0x0, 0x0);
     gdt_store(0x08, 0xFFFFF, 0x0, GDT_KERNEL_ACCESS, GDT_FLAGS_32 | GDT_FLAGS_4K_BLOCK);
     gdt_store(0x10, 0xFFFFF, 0x0, GDT_DATA_ACCESS, GDT_FLAGS_32 | GDT_FLAGS_4K_BLOCK);
+    gdt_store(0x18, 0xFFFFF, 0x0, GDT_KERNEL_ACCESS, 0);
+    gdt_store(0x20, 0xFFFFF, 0x0, GDT_DATA_ACCESS, 0);
 
     struct GDTPointer gdtp;
-    gdtp.Size = sizeof(struct GDTSelector) * 3 - 1;
+    gdtp.Size = sizeof(struct GDTSelector) * 5 - 1;
     gdtp.Offset = (uint32_t)GDT;
 
     load_gdt(gdtp);

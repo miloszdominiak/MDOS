@@ -41,9 +41,11 @@ static uint8_t typematic_byte(uint8_t rate, uint8_t delay)
 #include <stdio.h>
 static void keyboard_interrupt()
 {
-    circular_push(&scancode_buffer, inb(PS2_KBD_DATA));
-    thread_unblock(keyboard_thread);
+    uint8_t byte = inb(PS2_KBD_DATA);
+    circular_push(&scancode_buffer, byte);
     pic_master_eoi();
+    if(byte != 0xE0)
+        thread_unblock(keyboard_thread);
 }
 
 static uint8_t scancode_read()
@@ -63,13 +65,26 @@ void keycode_translator(uint8_t keycode)
 {
     struct Keypress keypress;
     keypress.keycode = keycode;
+    keypress.shifted = 0;
+    keypress.alted = 0;
 
-    if(key_state[0x80] || key_state[0x8B])
+    if((key_state[0x80] || key_state[0x8B]) && (key_state[0xA4]))
+    {
+        keypress.ascii = keycode_to_ascii_alted_shifted[keycode];
+        keypress.shifted = 1;
+        keypress.alted = 1;
+    }
+    else if(key_state[0x80] || key_state[0x8B])
     {
         keypress.ascii = keycode_to_ascii_shifted[keycode];
         keypress.shifted = 1;
     }
-    else
+    else if(key_state[0xA4])
+    {
+        keypress.ascii = keycode_to_ascii_alted[keycode];
+        keypress.alted = 1;
+    }
+    else 
     {
         keypress.ascii = keycode_to_ascii[keycode];
         keypress.shifted = 0;

@@ -12,7 +12,7 @@ void set_cursor(uint8_t y, uint8_t x);
 void disable_cursor();
 void update_cursor();
 
-void put_char_at(char c, uint8_t color, uint8_t y, uint8_t x);
+void put_char_at(uint8_t c, uint8_t color, uint8_t y, uint8_t x);
 
 void terminal_initialize();
 

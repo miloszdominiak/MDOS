@@ -27,6 +27,4 @@ SECTIONS
         *(.bss)
     }
 
-    /DISCARD/ : {*(*)}
-
 }
