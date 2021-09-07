@@ -44,8 +44,7 @@ static void keyboard_interrupt()
     uint8_t byte = inb(PS2_KBD_DATA);
     circular_push(&scancode_buffer, byte);
     pic_master_eoi();
-    if(byte != 0xE0)
-        thread_unblock(keyboard_thread);
+    thread_unblock(keyboard_thread);
 }
 
 static uint8_t scancode_read()

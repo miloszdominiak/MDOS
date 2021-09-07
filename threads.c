@@ -62,7 +62,9 @@ void thread_unblock(struct ThreadInfo* thread)
     {
         thread->state = THREAD_STATE_READY_TO_RUN;
         //scheduler_push(thread);
+        scheduler_lock();
         thread_switch(thread);
+        scheduler_unlock();
     }
 }
 

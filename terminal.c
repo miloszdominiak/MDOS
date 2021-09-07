@@ -1,15 +1,13 @@
 #include <terminal.h>
 #include <ports.h>
 
-#define VGA_BUFFER 0xB8000;
-
 #define COLOR(bg,fg) bg << 4 | fg;
 #define VGA_ENTRY(c,color) color << 8 | (uint8_t)c
 
 static const uint8_t VGA_WIDTH = 80, VGA_HEIGHT = 25;
 
-uint8_t terminal_color = COLOR(VGA_COLOR_BLACK, VGA_COLOR_LIGHT_GREY);
-uint8_t terminal_row, terminal_column;
+uint32_t terminal_color = COLOR(VGA_COLOR_BLACK, VGA_COLOR_LIGHT_GREY);
+uint32_t terminal_row, terminal_column;
 
 uint32_t* vesa_buffer;
 
@@ -187,6 +185,7 @@ static inline uint8_t color(enum vga_color bg, enum vga_color fg)
 inline void set_color(enum vga_color bg, enum vga_color fg)
 {
     terminal_color = COLOR(bg, fg);
+	terminal_color = 0xFFFFFF;
 }
 
 void put_pixel(int x, int y, uint32_t color)
@@ -194,19 +193,19 @@ void put_pixel(int x, int y, uint32_t color)
     vesa_buffer[y*640 + x] = color; 
 }
 
-void put_char_at(uint8_t c, uint8_t color, uint8_t char_y, uint8_t char_x)
+void put_character_at(uint8_t character, uint32_t color, uint8_t char_y, uint8_t char_x)
 {
-    //uint16_t* buffer = (uint16_t*) VGA_BUFFER;
-    //buffer[y * VGA_WIDTH + x] = VGA_ENTRY(c, color);
-    (void)color;
     for(int y = 0; y < 16; y++)
         for(int x = 0; x < 8; x++)
-            put_pixel(char_x * 8 + x, char_y * 16 + y, 0x0000FFFF * (font[c][y] & (1 << (7 - x))));
+			if(font[character][y] & (1 << (7 - x)))
+            	put_pixel(char_x * 8 + x, char_y * 16 + y, color);
+			else
+				put_pixel(char_x * 8 + x, char_y * 16 + y, 0);
 }
 
 void set_cursor(uint8_t y, uint8_t x)
 {
-    put_char_at('_', 0, y, x);
+    put_character_at('_', 0, y, x);
 }
 
 void terminal_initialize(uint32_t buffer)
@@ -214,7 +213,7 @@ void terminal_initialize(uint32_t buffer)
     vesa_buffer = (uint32_t*)buffer;
     for(uint8_t y = 0; y < VGA_HEIGHT; y++)
         for(uint8_t x = 0; x < VGA_WIDTH; x++)
-            put_char_at(1, terminal_color, y, x);
+            put_character_at(' ', terminal_color, y, x);
     
     terminal_row = terminal_column = 0;
     set_cursor(terminal_row, terminal_column);

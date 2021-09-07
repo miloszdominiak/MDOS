@@ -27,7 +27,6 @@ stack_top:
 .section .rodata
 .global sperma
 sperma:
-.incbin "out/real.bin"
 
 .global freememory
 freememory:

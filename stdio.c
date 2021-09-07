@@ -39,7 +39,7 @@ void putc(char c)
         terminal_row++;
     }
     else
-        put_char_at(c, terminal_color, terminal_row, terminal_column);
+        put_character_at(c, terminal_color, terminal_row, terminal_column);
     
     if(c != '\n' && ++terminal_column == 80)
     {
