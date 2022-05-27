@@ -13,8 +13,8 @@
     .long 0
     .long 0
     .long 0
-    .long 1024
-    .long 720
+    .long 600
+    .long 480
     .long 32
 
 .section .bss

@@ -55,8 +55,8 @@ uint32_t kolory[1000];
 
 void kernel_main(uint32_t* address)
 {
-    set_color(VGA_COLOR_BLACK, VGA_COLOR_LIGHT_GREY);
-    terminal_initialize(address[22]);
+    set_color(VGA_COLOR_BLACK, VGA_COLOR_LIGHT_BLUE);
+    terminal_initialize(address[22], address[25], address[26]);
 
     printf("MDOS\n");
     printf("----\n");
@@ -69,6 +69,29 @@ void kernel_main(uint32_t* address)
 
     ps2_controller_init();
 
+    // for(int i = 0; i < 256; i++)
+    // {
+    //     printf("%1 ", i);
+    //     putc(i);
+    //     printf("            ");
+    // }
+
+    printf("   ");
+    for(int x = 0; x < 16; x++)
+        printf("%1 ", x);
+
+    printf("\n");
+    for(int y = 2; y < 16; y++)
+    {
+        printf("%1 ", y << 4);
+        for(int x = 0; x < 16; x++)
+        {
+            putc(' ');
+            putc(y << 4 | x);
+            putc(' ');
+        }
+        printf("\n");
+    }
     uint8_t dupa;
     while(1)
     {
@@ -77,6 +100,7 @@ void kernel_main(uint32_t* address)
         update_cursor();
     }
 
+    
 
     while(1);
 }

@@ -33,7 +33,7 @@ out/rand.o
 all: out/myos.bin
 	cp out/myos.bin isodir/boot/myos.bin
 	grub-mkrescue -o out/myos.iso isodir
-	cp out/myos.iso /mnt/c/users/milos/onedrive/Dokumenty/
+	cp out/myos.iso /home/mdominiak/
 
 	qemu-system-i386 -s -cdrom out/myos.iso -usb -device usb-ehci -device qemu-xhci -vga std
 

@@ -15,7 +15,8 @@
                 "-nostdlib",
                 "-lgcc",
                 "-ffreestanding"
-            ]
+            ],
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4

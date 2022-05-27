@@ -26,10 +26,10 @@ void putc(char c)
         else
         {
             terminal_row--;
-            terminal_column = 79;
+            terminal_column = terminal_columns - 1;
             putc(' ');
             terminal_row--;
-            terminal_column = 78;
+            terminal_column = terminal_columns - 2;
         }
     }
     else if(c == '\n')
@@ -41,7 +41,7 @@ void putc(char c)
     else
         put_character_at(c, terminal_color, terminal_row, terminal_column);
     
-    if(c != '\n' && ++terminal_column == 80)
+    if(c != '\n' && ++terminal_column == terminal_columns)
     {
         terminal_column = 0;
         terminal_row++;
