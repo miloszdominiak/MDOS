@@ -4,17 +4,19 @@
 #include <ports.h>
 #include <irq.h>
 #include <ps2.h>
+#include <graphics.h>
 #include <keymaps.h>
 #include <keypress.h>
 #include <threads.h>
 #include <terminal.h>
+#include <stdio.h>
 
 struct Circular scancode_buffer;
 struct KeypressBuffer keypress_buffer;
 
 struct ThreadInfo* keyboard_thread;
 
-static uint8_t keyboard_read()
+uint8_t keyboard_read()
 {
     while(circular_empty(&scancode_buffer))
         asm("hlt");
@@ -24,27 +26,33 @@ static uint8_t keyboard_read()
 
 static uint8_t keyboard_send(uint8_t command)
 {
+    printf("Zaczalem czekac");
     if(ps2_wait_for_write())
     {
         outb(PS2_KBD_DATA, command);
+        printf("flacezbo");
         return keyboard_read() == PS2_KBD_ACKNOWLEDGE;
     }
-
     return 0;
 }
 
-static uint8_t typematic_byte(uint8_t rate, uint8_t delay)
-{
-    return (delay << 5) | rate;
-}
+// static uint8_t typematic_byte(uint8_t rate, uint8_t delay)
+// {
+//     return (delay << 5) | rate;
+// }
 
 #include <stdio.h>
 static void keyboard_interrupt()
 {
+    //update_rect(0, 0, screen_width, screen_height);
     uint8_t byte = inb(PS2_KBD_DATA);
+    printf("o");
+    printf("%1", byte);
     circular_push(&scancode_buffer, byte);
+    printf("d");
     pic_master_eoi();
-    thread_unblock(keyboard_thread);
+    printf("byt");
+    //thread_unblock(keyboard_thread);
 }
 
 static uint8_t scancode_read()
@@ -67,6 +75,8 @@ void keycode_translator(uint8_t keycode)
     keypress.shifted = 0;
     keypress.alted = 0;
 
+    //printf("%1", keycode);
+
     if((key_state[0x80] || key_state[0x8B]) && (key_state[0xA4]))
     {
         keypress.ascii = keycode_to_ascii_alted_shifted[keycode];
@@ -82,6 +92,12 @@ void keycode_translator(uint8_t keycode)
     {
         keypress.ascii = keycode_to_ascii_alted[keycode];
         keypress.alted = 1;
+    }
+    else if(key_state[0xA0] || key_state[0xA7])
+    {
+        keypress.ascii = keycode_to_ascii_control[keycode];
+        keypress.alted = 1;
+        keypress.control = 1;
     }
     else 
     {
@@ -160,13 +176,17 @@ void ps2_keyboard_init()
     irq_install_handler(PS2_KBD_INTERRUPT, keyboard_interrupt);
     circular_clear(&scancode_buffer);
 
-    keyboard_send(PS2_KBD_SET_TYPEMATIC);
-    keyboard_send(typematic_byte(PS2_KBD_RATE_MAX, PS2_KBD_DELAY_500MS));
+    printf("zaczalem keybo");
+
+    //keyboard_send(PS2_KBD_SET_TYPEMATIC);
+    //keyboard_send(typematic_byte(PS2_KBD_RATE_MAX, PS2_KBD_DELAY_500MS));
 
     keyboard_send(PS2_KBD_ENABLE_SCANNING);
 
-    keyboard_thread = thread_create(scancode_translator);
-    scheduler_lock();
-    schedule();
-    scheduler_unlock();
+    printf("skonczylem keybo");
+
+    // keyboard_thread = thread_create(scancode_translator, "Keyboard driver");
+    // scheduler_lock();
+    // schedule();
+    // scheduler_unlock();
 }

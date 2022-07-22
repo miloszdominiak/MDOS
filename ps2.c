@@ -4,6 +4,7 @@
 #include <circular.h>
 #include <irq.h>
 #include <ps2kbd.h>
+#include <ps2mouse.h>
 #include <stdbool.h>
 
 static uint8_t ps2_controller_status()
@@ -11,13 +12,12 @@ static uint8_t ps2_controller_status()
     return inb(PS2_STATUS);
 }
 
-uint32_t ps2_wait_for_write()
+bool ps2_wait_for_write()
 {
     int timeout = 500000;
     while(ps2_controller_status() & PS2_CTRL_INPUT_FULL && timeout)
-    {
         timeout--;
-    }
+
     return timeout;
 }
 
@@ -25,9 +25,7 @@ static uint32_t wait_for_read()
 {
     int timeout = 500000;
     while(!(ps2_controller_status() & PS2_CTRL_OUTPUT_FULL) && timeout)
-    {
         timeout--;
-    }
     return timeout;
 }
 
@@ -61,6 +59,11 @@ static uint8_t ps2_first_send(uint8_t command)
     return 0;
 }
 
+uint8_t ps2_second_send(uint8_t command)
+{
+    outb(PS2_COMMAND, 0xD4);
+    return ps2_first_send(command);
+}
 
 static void flush_buffer()
 {
@@ -91,6 +94,7 @@ static void ps2_config_write(uint8_t config)
     ps2_controller_send(PS2_CONFIG_BYTE_WRITE);
     ps2_data_write(config);
 }
+
 
 void ps2_controller_init()
 {
@@ -160,7 +164,7 @@ void ps2_controller_init()
 
     if(second_active)
     {
-        //configuration |= PS2_CONFIG_SECOND_INT_ENABLED;
+        configuration |= PS2_CONFIG_SECOND_INT_ENABLED;
     }
     ps2_config_write(configuration);
 
@@ -197,7 +201,7 @@ void ps2_controller_init()
                     else
                     {
                         printf("MF2 keyboard with translation\n");
-                        ps2_keyboard_init();
+                        //ps2_keyboard_init();
                     }
                 }
             }
@@ -208,7 +212,54 @@ void ps2_controller_init()
 
     if(second_active)
     {
-        //ps2_controller_send(PS2_CTRL_ENABLE_SECOND);
+        ps2_controller_send(PS2_CTRL_ENABLE_SECOND);
+
+        if(ps2_second_send(PS2_DEVICE_RESET))
+        {
+            if(ps2_controller_read() != PS2_DEVICE_TEST_PASSED)
+            {
+                printf("Second device broken (test failed)\n");
+                //return;
+            }
+        }
+
+        wait_for_read();
+        ps2_controller_read();
+
+        if(ps2_second_send(PS2_DEVICE_DISABLE_SCANNING) && ps2_second_send(PS2_DEVICE_IDENTIFY))
+        {
+            if(wait_for_read())
+            {
+                uint8_t response = ps2_controller_read();
+                if(response == 0x00)
+                {
+                    printf("Standard PS/2 mouse\n");
+
+                    ps2_mouse_init();
+                }
+                else if(response == 0x03)
+                    printf("Mouse with scroll wheel\n");
+                else if(response == 0x04)
+                    printf("Mouse with 5 buttons\n");
+                else if(response == 0xAB)
+                {
+                    if(ps2_controller_read() == 0x83)
+                        printf("MF2 keyboard\n");
+                    else
+                    {
+                        printf("MF2 keyboard with translation\n");
+                        //ps2_keyboard_init();
+                    }
+                }
+            }
+            else
+                printf("Old AT keyboard with translation\n");
+        }
+
+        //irq_install_handler(12, mouse_interrupt);
+        
+        //printf("po");
+        
     }
 }
 

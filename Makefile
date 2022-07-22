@@ -1,6 +1,6 @@
 CC = /home/mdominiak/opt/cross/bin/i686-elf-gcc
 AS = /home/mdominiak/opt/cross/bin/i686-elf-as
-CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror -g
+CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror -O3
 OBJ = \
 out/boot_asm.o \
 out/kernel.o \
@@ -28,14 +28,19 @@ out/keymaps.o \
 out/string.o \
 out/terminal_asm.o \
 out/vga.o \
-out/rand.o
+out/rand.o \
+out/vim.o \
+out/ps2mouse.o \
+out/graphics.o \
+out/windows.o \
+out/list.o
 
 all: out/myos.bin
 	cp out/myos.bin isodir/boot/myos.bin
 	grub-mkrescue -o out/myos.iso isodir
 	cp out/myos.iso /home/mdominiak/
 
-	qemu-system-i386 -s -cdrom out/myos.iso -usb -device usb-ehci -device qemu-xhci -vga std
+	qemu-system-i386 -s -cdrom out/myos.iso -usb -device usb-ehci -device qemu-xhci -d int
 
 out/myos.bin: $(OBJ)
 	$(CC) -T linker.ld -o $@ -ffreestanding -O2 -nostdlib out/*.o -lgcc
@@ -44,7 +49,7 @@ out/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 out/%.o: %.s
-	$(AS) $< -o $@
+	$(AS) $< -g -o $@
 
 install:
 	sudo dd if=out/myos.iso of=/dev/sdc

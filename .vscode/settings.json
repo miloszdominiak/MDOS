@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "ps2.h": "c"
+        "ps2.h": "c",
+        "circular.h": "c"
     }
 }

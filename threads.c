@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <irq.h>
 #include <pic.h>
+#include <stdio.h>
 
 uint32_t count = 0;
 
@@ -9,6 +10,8 @@ void timer()
 {
     count++;
     pic_master_eoi();
+
+    //printf("%1", count);
     
     scheduler_lock();
     schedule();
@@ -28,10 +31,11 @@ struct ThreadInfo* threads_init()
     current_thread = thread_info;
     thread_info->state = THREAD_STATE_RUNNING;
     thread_info->next = 0;
+    thread_info->name = "KERNEL";
     return thread_info;
 }
 
-struct ThreadInfo* thread_create(ThreadFunction function)
+struct ThreadInfo* thread_create(ThreadFunction function, const char* name)
 {
     struct ThreadInfo* thread_info = malloc(sizeof(struct ThreadInfo));
     
@@ -41,6 +45,7 @@ struct ThreadInfo* thread_create(ThreadFunction function)
 
     thread_info->esp = thread_stack;
     thread_info->next = 0;
+    thread_info->name = name;
 
     scheduler_push(thread_info);
 
@@ -88,8 +93,10 @@ void schedule()
     {
         struct ThreadInfo* next_thread = first_ready_to_run;
         first_ready_to_run = first_ready_to_run->next;
+        //puts(next_thread->name);
 
         thread_switch(next_thread);
+        //printf("---%1---", cli_lock);
     }
 }
 

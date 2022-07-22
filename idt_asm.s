@@ -2,6 +2,7 @@
 .extern stub_table
 
 .global load_idt
+.global load_stubs
 
 .macro stub number
 .global isr_stub\number
@@ -19,7 +20,7 @@ isr_stub\number:
 .endm
 
 .section .text
-load_idt:
+load_stubs:
 .altmacro
 .set i, 0
 .rept 256
@@ -27,6 +28,9 @@ load_idt:
     .set i, i + 1
 .endr
 .noaltmacro
+    ret
+
+load_idt:
 	lidt 4(%esp)
 	sti
 	ret

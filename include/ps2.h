@@ -2,7 +2,7 @@
 #define PS_2
 
 #include <stdint.h>
-#include <circular.h>
+#include <stdbool.h>
 
 #define PS2_COMMAND 0x64
 #define PS2_STATUS 0x64
@@ -30,12 +30,14 @@
 
 #define PS2_DEVICE_RESET 0xFF
 #define PS2_DEVICE_DISABLE_SCANNING 0xF5
+#define PS2_DEVICE_ENABLE_SCANNING 0xF4
 #define PS2_DEVICE_IDENTIFY 0xF2
 
 #define PS2_DEVICE_TEST_PASSED 0xAA
 #define PS2_DEVICE_ACKNOWLEDGE 0xFA
 
 void ps2_controller_init();
-uint32_t ps2_wait_for_write();
+bool ps2_wait_for_write();
+uint8_t ps2_second_send(uint8_t command);
 
 #endif

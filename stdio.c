@@ -46,6 +46,12 @@ void putc(char c)
         terminal_column = 0;
         terminal_row++;
     }
+
+    if(terminal_row == terminal_rows)
+    {
+        terminal_scroll();
+        terminal_row--;
+    }
 }
 
 void puts(const char* str)
@@ -111,6 +117,11 @@ uint8_t scanf(const char* format, ...)
                     if(keypress.ascii && keypress.pressed)
                     {
                         *dest = keypress.ascii;
+                        if(terminal_echo && !keypress.control)
+                        {
+                            putc(keypress.ascii);
+                            update_cursor();
+                        }
                         return 1;
                     }
                 }
@@ -134,4 +145,37 @@ uint8_t scanf(const char* format, ...)
     }
     va_end(list);
     return 0;
+}
+
+char getc()
+{
+    while(1)
+    {
+        while(keypress_empty(&keypress_buffer))
+            asm("hlt");
+
+        struct Keypress keypress = keypress_pop(&keypress_buffer);
+    
+        if(keypress.ascii && keypress.pressed)
+            return keypress.ascii;
+    }
+}
+
+size_t getline(char** buffer)
+{
+    int length = 0;
+    char c;
+    do
+    {
+        scanf("%c", &c);
+        if(c != '\b')
+            (*buffer)[length++] = c;
+        else
+            (*buffer)[length--] = 0;
+    }
+    while (c != '\n');
+
+    (*buffer)[length] = 0;
+
+    return length;
 }

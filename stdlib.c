@@ -62,8 +62,6 @@ static int digit_to_int(char digit)
     return 0;
 }
 
-#include <stdio.h>
-
 int strtol(const char* str, const char* endptr, int base)
 {
     (void)endptr;
@@ -74,4 +72,11 @@ int strtol(const char* str, const char* endptr, int base)
         result += digit_to_int(*str++);
     }
     return result;
+}
+
+int rand()
+{
+    static int seed = 12348567;
+    seed = (1103515245 * seed + 12345) % (1 << 31);
+    return seed;
 }

@@ -1,7 +1,7 @@
 #include <gdt.h>
 #include <stdio.h>
 
-struct GDTSelector GDT[3];
+struct GDTSelector GDT[5];
 
 void gdt_store(uint8_t selector, uint32_t limit, uint32_t base, uint8_t access, uint8_t flags)
 {

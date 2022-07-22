@@ -6,12 +6,12 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 27 22:48:11 2022
+# Make data base, printed on Fri Jul 22 02:37:21 2022
 
 # Variables
 
 # makefile (from 'Makefile', line 4)
-OBJ = out/boot_asm.o out/kernel.o out/terminal.o out/stdio.o out/ports_asm.o out/gdt.o out/gdt_asm.o out/idt.o out/idt_asm.o out/pic.o out/pci.o out/uhci.o out/ehci.o out/xhci.o out/stdlib.o out/irq.o out/threads.o out/threads_asm.o out/ps2.o out/ps2kbd.o out/circular.o out/keypress.o out/keymaps.o out/string.o out/terminal_asm.o out/vga.o out/rand.o
+OBJ = out/boot_asm.o out/kernel.o out/terminal.o out/stdio.o out/ports_asm.o out/gdt.o out/gdt_asm.o out/idt.o out/idt_asm.o out/pic.o out/pci.o out/uhci.o out/ehci.o out/xhci.o out/stdlib.o out/irq.o out/threads.o out/threads_asm.o out/ps2.o out/ps2kbd.o out/circular.o out/keypress.o out/keymaps.o out/string.o out/terminal_asm.o out/vga.o out/rand.o out/vim.o out/ps2mouse.o out/graphics.o out/windows.o out/list.o
 # environment
 GDK_BACKEND = x11
 # makefile (from 'Makefile', line 2)
@@ -25,7 +25,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-5dd0f0de-ddf3-4814-ab99-4c34084c3c0a.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c567aa80-b80f-4043-9bbd-b2285b62a0e2.sock
 # environment
 LC_NAME = pl_PL.UTF-8
 # environment
@@ -61,7 +61,7 @@ VSCODE_CODE_CACHE_PATH = /home/mdominiak/.config/Code/CachedData/c3511e6c69bb390
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.G19WM1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.Z9KDP1
 # default
 .LOADED := 
 # default
@@ -99,13 +99,13 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 2362
+VSCODE_PID = 79166
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/client:@/tmp/.ICE-unix/1800,unix/client:/tmp/.ICE-unix/1800
+SESSION_MANAGER = local/client:@/tmp/.ICE-unix/1944,unix/client:/tmp/.ICE-unix/1944
 # automatic
 *F = $(notdir $*)
 # environment
@@ -147,7 +147,7 @@ LC_MONETARY = pl_PL.UTF-8
 # environment
 LC_TIME = pl_PL.UTF-8
 # environment
-INVOCATION_ID = 33fa4a1e63134f45acc70b8149307190
+INVOCATION_ID = 8f0c7e7d390d4347a00660b13731ae09
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -179,7 +179,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1852
+SYSTEMD_EXEC_PID = 1967
 # environment
 DISPLAY = :0
 # environment
@@ -189,11 +189,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1605
+MANAGERPID = 1754
 # environment
 LC_MEASUREMENT = pl_PL.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2362
+GIO_LAUNCHED_DESKTOP_FILE_PID = 79166
 # environment
 _ = /usr/share/code/code
 # environment
@@ -201,9 +201,9 @@ LC_PAPER = pl_PL.UTF-8
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # makefile (from 'Makefile', line 3)
-CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror -g
+CFLAGS = -ffreestanding -Iinclude -Wall -Wextra -Werror -O3
 # environment
-JOURNAL_STREAM = 8:33268
+JOURNAL_STREAM = 8:35319
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -235,7 +235,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = pl_PL.UTF-8
 # variable set hash-table stats:
-# Load=112/1024=11%, Rehash=0, Collisions=4/146=3%
+# Load=112/1024=11%, Rehash=0, Collisions=4/148=3%
 
 # Pattern-specific Variable Values
 
@@ -243,142 +243,110 @@ LC_IDENTIFICATION = pl_PL.UTF-8
 
 # Directories
 
-# . (device 2069, inode 1219917): 38 files, no impossibilities.
+# . (device 2069, inode 1180299): 53 files, no impossibilities.
 
-# 38 files, no impossibilities in 1 directories.
+# 53 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 out/%.o: %.c
-#  recipe to execute (from 'Makefile', line 44):
+#  recipe to execute (from 'Makefile', line 49):
 	$(CC) $(CFLAGS) -c $< -o $@
 
 out/%.o: %.s
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
+#  recipe to execute (from 'Makefile', line 52):
+	$(AS) $< -g -o $@
 
 # 2 implicit rules, 0 (0.0%) terminal.
 # Files
 
-out/xhci.o: xhci.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'xhci'
-#  Last modified 2022-05-24 22:19:49.82035185
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+# Not a target:
+out/xhci.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-ehci.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
+out/vim.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-circular.c:
+out/terminal_asm.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
  
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/terminal_asm.o: terminal_asm.s
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'terminal_asm'
-#  Last modified 2022-05-24 22:19:49.944354104
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
+# Not a target:
+out/idt_asm.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-string.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/idt_asm.o: idt_asm.s
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'idt_asm'
-#  Last modified 2022-05-24 22:19:49.744350467
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
-
-out/ps2.o: ps2.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ps2'
-#  Last modified 2022-05-24 22:19:49.880352941
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/ps2.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-25 12:10:31.676711295
+#  Last modified 2022-07-22 00:44:54.418418784
 #  File has been updated.
 #  Successfully updated.
 
-out/ports_asm.o: ports_asm.s
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ports_asm'
-#  Last modified 2022-05-24 22:19:49.708349813
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
+# Not a target:
+out/ports_asm.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 out/kernel.o: kernel.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'kernel'
-#  Last modified 2022-05-25 12:09:45.937443668
+#  Last modified 2022-07-22 00:46:37.185941056
 #  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
+#  Needs to be updated (-q is set).
+# automatic
+# @ := out/kernel.o
+# automatic
+# * := kernel
+# automatic
+# < := kernel.c
+# automatic
+# + := kernel.c
+# automatic
+# % := 
+# automatic
+# ^ := kernel.c
+# automatic
+# ? := kernel.c
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=2/15=13%
+#  recipe to execute (from 'Makefile', line 49):
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Not a target:
-terminal_asm.s:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/gdt_asm.o: gdt_asm.s
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'gdt_asm'
-#  Last modified 2022-05-24 22:19:49.724350104
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
-
-out/circular.o: circular.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'circular'
-#  Last modified 2022-05-24 22:19:49.90835345
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/gdt_asm.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-terminal.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-25 12:31:37.304485452
-#  File has been updated.
-#  Successfully updated.
+out/circular.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 boot_asm.s:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-25 12:09:44.397468329
+#  Last modified 2022-07-19 12:31:46.283652221
 #  File has been updated.
 #  Successfully updated.
 
@@ -386,112 +354,51 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 54):
+#  recipe to execute (from 'Makefile', line 59):
 	rm out/*.o
 	rm out/myos.iso
 
 # Not a target:
-pci.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/keypress.o: keypress.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'keypress'
-#  Last modified 2022-05-24 22:19:49.920353668
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-out/threads_asm.o: threads_asm.s
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'threads_asm'
-#  Last modified 2022-05-24 22:19:49.860352577
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
-
-out/rand.o: rand.s
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'rand'
-#  Last modified 2022-05-24 22:19:49.960354396
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
-
-out/vga.o: vga.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'vga'
-#  Last modified 2022-05-24 22:19:49.960354396
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/keypress.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-vga.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/pic.o: pic.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'pic'
-#  Last modified 2022-05-24 22:19:49.764350831
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/threads_asm.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-uhci.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
+out/rand.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-stdlib.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
+out/vga.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-idt.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
+out/pic.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-idt_asm.s:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/ps2kbd.o: ps2kbd.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ps2kbd'
-#  Last modified 2022-05-24 22:19:49.896353231
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/list.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-stdio.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-25 10:41:29.565166601
-#  File has been updated.
-#  Successfully updated.
+out/ps2kbd.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 .DEFAULT:
@@ -500,288 +407,157 @@ stdio.c:
 #  File has not been updated.
 
 # Not a target:
-gdt_asm.s:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-ps2kbd.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/threads.o: threads.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'threads'
-#  Last modified 2022-05-24 22:19:49.860352577
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/threads.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 all: out/myos.bin
 #  Command line target.
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
-# automatic
-# @ := all
-# automatic
-# * := 
-# automatic
-# < := out/myos.bin
-# automatic
-# + := out/myos.bin
-# automatic
-# % := 
-# automatic
-# ^ := out/myos.bin
-# automatic
-# ? := out/myos.bin
-# automatic
-# | := 
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
-#  recipe to execute (from 'Makefile', line 34):
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+#  recipe to execute (from 'Makefile', line 39):
 	cp out/myos.bin isodir/boot/myos.bin
 	grub-mkrescue -o out/myos.iso isodir
 	cp out/myos.iso /home/mdominiak/
-	qemu-system-i386 -s -cdrom out/myos.iso -usb -device usb-ehci -device qemu-xhci -vga std
-
-out/terminal.o: terminal.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'terminal'
-#  Last modified 2022-05-25 12:31:38.640464119
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+	qemu-system-i386 -s -cdrom out/myos.iso -usb -device usb-ehci -device qemu-xhci -d int
 
 # Not a target:
-keypress.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
- 
-
-out/ehci.o: ehci.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'ehci'
-#  Last modified 2022-05-24 22:19:49.808351631
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-out/stdlib.o: stdlib.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'stdlib'
-#  Last modified 2022-05-24 22:19:49.832352067
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-out/idt.o: idt.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'idt'
-#  Last modified 2022-05-24 22:19:49.740350394
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/terminal.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-rand.s:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
+out/ehci.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+out/stdlib.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+out/idt.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+out/windows.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 kernel.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-25 12:09:29.105713226
+#  Last modified 2022-07-22 01:04:27.149249213
 #  File has been updated.
 #  Successfully updated.
 
-out/stdio.o: stdio.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'stdio'
-#  Last modified 2022-05-25 10:41:31.561158765
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+# Not a target:
+out/stdio.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 out/boot_asm.o: boot_asm.s
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'boot_asm'
-#  Last modified 2022-05-25 12:09:45.901444244
+#  Last modified 2022-07-21 22:08:47.951200179
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'Makefile', line 47):
-	$(AS) $< -o $@
-
-# Not a target:
-gdt.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 52):
+	$(AS) $< -g -o $@
 
 install:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 50):
+#  recipe to execute (from 'Makefile', line 55):
 	sudo dd if=out/myos.iso of=/dev/sdc
 	sync
 
 # Not a target:
-threads.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/uhci.o: uhci.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'uhci'
-#  Last modified 2022-05-24 22:19:49.79235134
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-out/string.o: string.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'string'
-#  Last modified 2022-05-24 22:19:49.944354104
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-out/keymaps.o: keymaps.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'keymaps'
-#  Last modified 2022-05-24 22:19:49.928353814
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Not a target:
-ports_asm.s:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-keymaps.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-threads_asm.s:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/myos.bin: out/boot_asm.o out/kernel.o out/terminal.o out/stdio.o out/ports_asm.o out/gdt.o out/gdt_asm.o out/idt.o out/idt_asm.o out/pic.o out/pci.o out/uhci.o out/ehci.o out/xhci.o out/stdlib.o out/irq.o out/threads.o out/threads_asm.o out/ps2.o out/ps2kbd.o out/circular.o out/keypress.o out/keymaps.o out/string.o out/terminal_asm.o out/vga.o out/rand.o
-#  Implicit rule search has not been done.
-#  Last modified 2022-05-25 12:31:38.648463992
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 41):
-	$(CC) -T linker.ld -o $@ -ffreestanding -O2 -nostdlib out/*.o -lgcc
-
-out/irq.o: irq.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'irq'
-#  Last modified 2022-05-24 22:19:49.844352287
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-out/gdt.o: gdt.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'gdt'
-#  Last modified 2022-05-24 22:19:49.720350031
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Not a target:
-xhci.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-.SUFFIXES:
+out/graphics.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
-pic.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
-
-out/pci.o: pci.c
-#  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'pci'
-#  Last modified 2022-05-24 22:19:49.780351122
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 44):
-	$(CC) $(CFLAGS) -c $< -o $@
+out/uhci.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-ps2.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
-#  File has been updated.
-#  Successfully updated.
+out/string.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-irq.c:
-#  Implicit rule search has been done.
-#  Last modified 2021-09-07 17:35:05
+out/keymaps.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+out/myos.bin: out/boot_asm.o out/kernel.o out/terminal.o out/stdio.o out/ports_asm.o out/gdt.o out/gdt_asm.o out/idt.o out/idt_asm.o out/pic.o out/pci.o out/uhci.o out/ehci.o out/xhci.o out/stdlib.o out/irq.o out/threads.o out/threads_asm.o out/ps2.o out/ps2kbd.o out/circular.o out/keypress.o out/keymaps.o out/string.o out/terminal_asm.o out/vga.o out/rand.o out/vim.o out/ps2mouse.o out/graphics.o out/windows.o out/list.o
+#  Implicit rule search has not been done.
+#  Last modified 2022-07-22 00:46:37.193941018
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+#  recipe to execute (from 'Makefile', line 46):
+	$(CC) -T linker.ld -o $@ -ffreestanding -O2 -nostdlib out/*.o -lgcc
+
+# Not a target:
+out/irq.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+out/gdt.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+out/ps2mouse.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+out/pci.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # files hash-table stats:
-# Load=61/1024=6%, Rehash=0, Collisions=6/190=3%
+# Load=41/1024=4%, Rehash=0, Collisions=0/93=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 110 / storage = 1023 B / avg = 9 B
-# current buf: size = 8162 B / used = 1023 B / count = 110 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 99 / storage = 986 B / avg = 9 B
+# current buf: size = 8162 B / used = 986 B / count = 99 / avg = 9 B
 
-# strcache performance: lookups = 176 / hit rate = 37%
+# strcache performance: lookups = 114 / hit rate = 13%
 # hash-table stats:
-# Load=110/8192=1%, Rehash=0, Collisions=2/176=1%
-# Finished Make data base on Fri May 27 22:48:11 2022
+# Load=99/8192=1%, Rehash=0, Collisions=2/114=2%
+# Finished Make data base on Fri Jul 22 02:37:21 2022
 
  

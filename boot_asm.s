@@ -13,8 +13,8 @@
     .long 0
     .long 0
     .long 0
-    .long 600
-    .long 480
+    .long 1280
+    .long 720
     .long 32
 
 .section .bss
@@ -33,9 +33,7 @@ freememory:
 
 .section .text
 .global _start
-.global ucieczka
-ucieczka:
-    jmp $0x18, $0x7E06
+
 _start:
     mov $stack_top, %esp
     push %ebx

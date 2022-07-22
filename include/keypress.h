@@ -12,6 +12,7 @@ struct Keypress
     uint8_t pressed;
     uint8_t shifted;
     uint8_t alted;
+    uint8_t control;
 };
 
 struct KeypressBuffer

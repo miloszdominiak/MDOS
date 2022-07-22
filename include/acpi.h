@@ -1,9 +1,6 @@
 #ifndef ACPI_H
 #define ACPI_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <acpitables.h>
 
 bool is_ps2_present();
 struct FADT* find_fadt();

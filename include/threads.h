@@ -8,7 +8,7 @@ struct ThreadInfo
     uint32_t *esp;
     struct ThreadInfo *next;
     uint8_t state;
-    char *name;
+    const char *name;
 };
 
 enum ThreadState
@@ -21,7 +21,7 @@ enum ThreadState
 typedef void (*ThreadFunction)();
 
 struct ThreadInfo* threads_init();
-struct ThreadInfo* thread_create(ThreadFunction function);
+struct ThreadInfo* thread_create(ThreadFunction function, const char* name);
 void thread_switch(struct ThreadInfo* next_thread);
 void thread_block();
 void thread_unblock(struct ThreadInfo* thread);

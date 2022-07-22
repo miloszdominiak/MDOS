@@ -10,6 +10,8 @@ struct Circular
 
     uint8_t read_pointer;
     uint8_t write_pointer;
+
+    uint8_t size;
 };
 
 void circular_clear(struct Circular* buffer);

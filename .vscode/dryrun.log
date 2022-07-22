@@ -1,36 +1,41 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/mdominiak/MDOS'
-/home/mdominiak/opt/cross/bin/i686-elf-as boot_asm.s -o out/boot_asm.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c kernel.c -o out/kernel.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c terminal.c -o out/terminal.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c stdio.c -o out/stdio.o
-/home/mdominiak/opt/cross/bin/i686-elf-as ports_asm.s -o out/ports_asm.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c gdt.c -o out/gdt.o
-/home/mdominiak/opt/cross/bin/i686-elf-as gdt_asm.s -o out/gdt_asm.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c idt.c -o out/idt.o
-/home/mdominiak/opt/cross/bin/i686-elf-as idt_asm.s -o out/idt_asm.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c pic.c -o out/pic.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c pci.c -o out/pci.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c uhci.c -o out/uhci.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c ehci.c -o out/ehci.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c xhci.c -o out/xhci.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c stdlib.c -o out/stdlib.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c irq.c -o out/irq.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c threads.c -o out/threads.o
-/home/mdominiak/opt/cross/bin/i686-elf-as threads_asm.s -o out/threads_asm.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c ps2.c -o out/ps2.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c ps2kbd.c -o out/ps2kbd.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c circular.c -o out/circular.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c keypress.c -o out/keypress.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c keymaps.c -o out/keymaps.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c string.c -o out/string.o
-/home/mdominiak/opt/cross/bin/i686-elf-as terminal_asm.s -o out/terminal_asm.o
-/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -g -c vga.c -o out/vga.o
-/home/mdominiak/opt/cross/bin/i686-elf-as rand.s -o out/rand.o
+/home/mdominiak/opt/cross/bin/i686-elf-as boot_asm.s -g -o out/boot_asm.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c kernel.c -o out/kernel.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c terminal.c -o out/terminal.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c stdio.c -o out/stdio.o
+/home/mdominiak/opt/cross/bin/i686-elf-as ports_asm.s -g -o out/ports_asm.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c gdt.c -o out/gdt.o
+/home/mdominiak/opt/cross/bin/i686-elf-as gdt_asm.s -g -o out/gdt_asm.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c idt.c -o out/idt.o
+/home/mdominiak/opt/cross/bin/i686-elf-as idt_asm.s -g -o out/idt_asm.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c pic.c -o out/pic.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c pci.c -o out/pci.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c uhci.c -o out/uhci.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c ehci.c -o out/ehci.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c xhci.c -o out/xhci.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c stdlib.c -o out/stdlib.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c irq.c -o out/irq.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c threads.c -o out/threads.o
+/home/mdominiak/opt/cross/bin/i686-elf-as threads_asm.s -g -o out/threads_asm.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c ps2.c -o out/ps2.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c ps2kbd.c -o out/ps2kbd.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c circular.c -o out/circular.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c keypress.c -o out/keypress.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c keymaps.c -o out/keymaps.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c string.c -o out/string.o
+/home/mdominiak/opt/cross/bin/i686-elf-as terminal_asm.s -g -o out/terminal_asm.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c vga.c -o out/vga.o
+/home/mdominiak/opt/cross/bin/i686-elf-as rand.s -g -o out/rand.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c vim.c -o out/vim.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c ps2mouse.c -o out/ps2mouse.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c graphics.c -o out/graphics.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c windows.c -o out/windows.o
+/home/mdominiak/opt/cross/bin/i686-elf-gcc -ffreestanding -Iinclude -Wall -Wextra -Werror -O3 -c list.c -o out/list.o
 /home/mdominiak/opt/cross/bin/i686-elf-gcc -T linker.ld -o out/myos.bin -ffreestanding -O2 -nostdlib out/*.o -lgcc
 cp out/myos.bin isodir/boot/myos.bin
 grub-mkrescue -o out/myos.iso isodir
 cp out/myos.iso /home/mdominiak/
-qemu-system-i386 -s -cdrom out/myos.iso -usb -device usb-ehci -device qemu-xhci -vga std
+qemu-system-i386 -s -cdrom out/myos.iso -usb -device usb-ehci -device qemu-xhci -d int
 make: Leaving directory '/home/mdominiak/MDOS'
  

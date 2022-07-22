@@ -1,6 +1,8 @@
 #ifndef PS2KBD_H
 #define PS2KBD_H
 
+#include <stdint.h>
+
 #define PS2_KBD_DATA 0x60
 #define PS2_KBD_INTERRUPT 1
 
@@ -18,5 +20,6 @@
 
 void ps2_keyboard_init();
 void scancode_translator();
+uint8_t keyboard_read();
 
 #endif
